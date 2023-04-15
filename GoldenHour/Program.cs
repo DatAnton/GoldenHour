@@ -8,14 +8,13 @@ namespace GoldenHour
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddAuthorization();
+            builder.Services.AddControllers();
 
-            builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.AddDbServices();
-            builder.AddAuthenticationServices();
-
+            builder.AddAuthServices();
+            builder.AddAdditionalServices();
 
             var app = builder.Build();
 
@@ -24,10 +23,17 @@ namespace GoldenHour
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
             app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.Run();
         }

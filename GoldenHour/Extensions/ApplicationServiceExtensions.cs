@@ -1,4 +1,6 @@
-﻿using GoldenHour.Persistance;
+﻿using GoldenHour.Application.Core;
+using GoldenHour.Persistance;
+using GoldenHour.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,7 +24,7 @@ namespace GoldenHour.Extensions
             return builder;
         }
 
-        public static WebApplicationBuilder AddAuthenticationServices(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddAuthServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddCors(o =>
             {
@@ -33,7 +35,8 @@ namespace GoldenHour.Extensions
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            })
+            .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -54,6 +57,16 @@ namespace GoldenHour.Extensions
                 .RequireAuthenticatedUser()
                 .Build();
             });
+
+            builder.Services.AddScoped<TokenService>();
+
+            return builder;
+        }
+
+        public static WebApplicationBuilder AddAdditionalServices(this WebApplicationBuilder builder)
+        {
+            //builder.Services.AddMediatR(typeof(Token.Handler).Assembly);
+            builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             return builder;
         }

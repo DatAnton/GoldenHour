@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Application", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Domain", "GoldenHour.Domain\GoldenHour.Domain.csproj", "{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.DTO", "GoldenHour.DTO\GoldenHour.DTO.csproj", "{7C305FCC-B63B-4E7B-BA3C-665B884FC23F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C305FCC-B63B-4E7B-BA3C-665B884FC23F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C305FCC-B63B-4E7B-BA3C-665B884FC23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C305FCC-B63B-4E7B-BA3C-665B884FC23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C305FCC-B63B-4E7B-BA3C-665B884FC23F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
