@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Maui", "GoldenHo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Persistance", "GoldenHour.Persistance\GoldenHour.Persistance.csproj", "{D9A6E63B-5FFB-441F-95F2-0BF1D83E3EC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Application", "GoldenHour.Application\GoldenHour.Application.csproj", "{70293874-A041-40BD-AD80-1468313FFAEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Domain", "GoldenHour.Domain\GoldenHour.Domain.csproj", "{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{D9A6E63B-5FFB-441F-95F2-0BF1D83E3EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9A6E63B-5FFB-441F-95F2-0BF1D83E3EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9A6E63B-5FFB-441F-95F2-0BF1D83E3EC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70293874-A041-40BD-AD80-1468313FFAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70293874-A041-40BD-AD80-1468313FFAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70293874-A041-40BD-AD80-1468313FFAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70293874-A041-40BD-AD80-1468313FFAEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE6F01C-81A6-42C5-98B2-D1F8A34F88B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
