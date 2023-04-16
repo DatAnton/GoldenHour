@@ -1,4 +1,5 @@
-﻿using GoldenHour.DTO.Accounts;
+﻿using GoldenHour.Domain;
+using GoldenHour.DTO.Accounts;
 using GoldenHour.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,10 +12,10 @@ namespace GoldenHour.Controllers
     [Route("api/[controller]")]
     public class AccountsController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ServiceMan> _userManager;
         private readonly TokenService _tokenService;
 
-        public AccountsController(UserManager<IdentityUser> userManager, TokenService tokenService)
+        public AccountsController(UserManager<ServiceMan> userManager, TokenService tokenService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
@@ -33,7 +34,7 @@ namespace GoldenHour.Controllers
             return isValidPassword ? Ok(await CreateUserObject(user)) : Unauthorized();
         }
 
-        private async Task<LoginResponse> CreateUserObject(IdentityUser user)
+        private async Task<LoginResponse> CreateUserObject(ServiceMan user)
         {
             return new LoginResponse
             {

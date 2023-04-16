@@ -1,4 +1,5 @@
 ﻿using GoldenHour.Application.Core;
+using GoldenHour.Domain;
 using GoldenHour.Persistance;
 using GoldenHour.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,7 +18,7 @@ namespace GoldenHour.Extensions
             builder.Services.AddDbContext<DataContext>(o =>
                 o.UseSqlServer(builder.Configuration.GetConnectionString("DataContext")));
 
-            builder.Services.AddIdentityCore<IdentityUser>()
+            builder.Services.AddIdentityCore<ServiceMan>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>();
 

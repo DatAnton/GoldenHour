@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GoldenHour.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,17 +10,17 @@ namespace GoldenHour.Services
     public class TokenService
     {
         private readonly IConfiguration _config;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ServiceMan> _userManager;
 
         public TokenService(IConfiguration config, 
-            UserManager<IdentityUser> userManager)
+            UserManager<ServiceMan> userManager)
         {
             _config = config;
             _userManager = userManager;
         }
 
 
-        public async Task<string> GenerateToken(IdentityUser user)
+        public async Task<string> GenerateToken(ServiceMan user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
