@@ -1,13 +1,13 @@
 import { RouteObject } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
+import LoginForm from "../../features/account/LoginForm";
 
 export const routes: RouteObject[] = [
     {
-        path: '/',
+        path: "/",
         element: <App />,
-        children: [
-        ]
+        children: [{ path: "login", element: <LoginForm /> }],
     },
 ];
 

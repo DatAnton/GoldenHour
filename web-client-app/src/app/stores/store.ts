@@ -1,8 +1,13 @@
 import { createContext, useContext } from "react";
+import AccountStore from "./accountStore";
 
-interface Store {}
+interface Store {
+    accountStore: AccountStore;
+}
 
-export const store: Store = {};
+export const store: Store = {
+    accountStore: new AccountStore()
+};
 
 export const StoreContext = createContext(store);
 
