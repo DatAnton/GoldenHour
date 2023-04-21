@@ -91,7 +91,7 @@ namespace GoldenHour.Persistance
                     Email = "admin@localhost.com",
                     NormalizedEmail = "ADMIN@LOCALHOST.COM",
                     NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                    UserName = "admin@localhost.com",
+                    UserName = "admin",
                     PasswordHash = hasher.HashPassword(null, "P@ssw0rd"),
                     EmailConfirmed = true,
                     NickName = "admin",

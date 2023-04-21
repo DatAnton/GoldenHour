@@ -4,6 +4,8 @@ using GoldenHour.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace GoldenHour.Controllers
 {
@@ -33,6 +35,17 @@ namespace GoldenHour.Controllers
 
             return isValidPassword ? Ok(await CreateUserObject(user)) : Unauthorized();
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<LoginResponse>> GetCurrentUser()
+        {
+            var user = await _userManager.Users
+                .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
+
+            return user != null ? Ok(await CreateUserObject(user)) : Unauthorized();
+        }
+
 
         private async Task<LoginResponse> CreateUserObject(ServiceMan user)
         {
