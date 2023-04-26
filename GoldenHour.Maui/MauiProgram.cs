@@ -1,5 +1,7 @@
-﻿using GoldenHour.Maui.Helpers;
+﻿using CommunityToolkit.Maui;
+using GoldenHour.Maui.Helpers;
 using GoldenHour.Maui.Interfaces;
+using GoldenHour.Maui.Pages;
 using GoldenHour.Maui.Services;
 using GoldenHour.Maui.ViewModels;
 
@@ -12,6 +14,7 @@ namespace GoldenHour.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -21,17 +24,20 @@ namespace GoldenHour.Maui
             #region Helpers
 
             builder.Services.AddSingleton<TokenHandlerHelper>();
+            builder.Services.AddSingleton<QRCodeHelper>();
 
             #endregion
 
             #region Services
 
             builder.Services.AddTransient<IAccountService, AccountService>();
+            builder.Services.AddTransient<IUserService, UserService>();
 
             #endregion
 
             #region ViewModels
 
+            builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<LoadingPageViewModel>();
             builder.Services.AddSingleton<LoginPageViewModel>();
 

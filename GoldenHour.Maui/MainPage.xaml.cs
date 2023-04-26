@@ -1,24 +1,33 @@
-﻿namespace GoldenHour.Maui
+﻿using CommunityToolkit.Maui.Views;
+using GoldenHour.Maui.Helpers;
+using GoldenHour.Maui.Interfaces;
+using GoldenHour.Maui.Pages;
+using GoldenHour.Maui.ViewModels;
+
+namespace GoldenHour.Maui
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private readonly QRCodeHelper _QRCodeHelper;
+        private readonly IUserService _userService;
 
-        public MainPage()
+        public MainPage(MainPageViewModel mainPageViewModel, QRCodeHelper QRCodeHelper, IUserService userService)
         {
             InitializeComponent();
+            BindingContext = mainPageViewModel;
+            _QRCodeHelper = QRCodeHelper;
+            _userService = userService;
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void ShowQrBtn_Clicked(object sender, EventArgs e)
         {
-            count++;
+            if (!File.Exists(_QRCodeHelper.QrCodePath))
+            {
+                var qrCode = await _userService.GetImageAsync();
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+                _QRCodeHelper.SaveQr(qrCode);
+            }
+            this.ShowPopup(new QrPopupPage(_QRCodeHelper.QrCodePath));
         }
     }
 }

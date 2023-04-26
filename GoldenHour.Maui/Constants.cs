@@ -4,7 +4,11 @@
     {
         public const string ANDROID_LOCALHOST = "http://10.0.2.2:8020";
         public const string LOCALHOST = "http://localhost:8020";
+        public static string BASE_ADDRESS = DeviceInfo.Platform == DevicePlatform.Android ? ANDROID_LOCALHOST : LOCALHOST;
 
         public const string TOKEN_KEY_SECURE_STORAGE = "Token";
+        public const string AUTH_HEADER_BEARER = "Bearer";
+
+        public const string QR_CODE_NAME = "qrCode.png";
     }
 }

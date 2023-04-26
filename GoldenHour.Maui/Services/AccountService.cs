@@ -5,22 +5,8 @@ using System.Net.Http.Json;
 
 namespace GoldenHour.Maui.Services
 {
-    public class AccountService : IAccountService
+    public class AccountService : BaseHttpService, IAccountService
     {
-        private readonly HttpClient _httpClient;
-
-        private static string _baseAddress = DeviceInfo.Platform == DevicePlatform.Android 
-            ? Constants.ANDROID_LOCALHOST : Constants.LOCALHOST;
-
-
-        public AccountService()
-        {
-            _httpClient = new()
-            {
-                BaseAddress = new Uri(_baseAddress)
-            };
-        }
-
         public async Task<LoginResponseModel> Login(LoginRequestModel requestModel)
         {
             try
