@@ -1,7 +1,9 @@
 ﻿using GoldenHour.Application.Core;
+using GoldenHour.Application.Users;
 using GoldenHour.Domain;
 using GoldenHour.Persistance;
 using GoldenHour.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -66,7 +68,7 @@ namespace GoldenHour.Extensions
 
         public static WebApplicationBuilder AddAdditionalServices(this WebApplicationBuilder builder)
         {
-            //builder.Services.AddMediatR(typeof(Token.Handler).Assembly);
+            builder.Services.AddMediatR(typeof(GenerateQRCode.Handler).Assembly);
             builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             return builder;
