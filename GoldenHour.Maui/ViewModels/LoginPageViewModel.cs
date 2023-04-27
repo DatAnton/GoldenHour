@@ -35,6 +35,7 @@ namespace GoldenHour.Maui.ViewModels
             }
             else
             {
+                IsLoading = true;
                 var loginModel = new LoginRequestModel
                 {
                     UserName = UserName,
@@ -57,6 +58,7 @@ namespace GoldenHour.Maui.ViewModels
                 {
                     await DisplayLoginMessage("Invalid username or password");
                 }
+                IsLoading = false;
             }
         }
 

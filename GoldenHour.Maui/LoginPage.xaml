@@ -10,6 +10,7 @@
         Spacing="25"
         Padding="30, 0"
         VerticalOptions="Center">
+        <ActivityIndicator IsRunning="{Binding IsLoading}" />
 
         <VerticalStackLayout Spacing="5">
             <Label Text="Welcome!" FontSize="28" TextColor="Gray" HorizontalTextAlignment="Center" />
