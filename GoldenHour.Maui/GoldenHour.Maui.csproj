@@ -59,6 +59,13 @@
 	  <PackageReference Include="Plugin.Maui.ScreenBrightness" Version="1.0.0-preview3" />
 	  <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.29.0" />
+	  <PackageReference Include="ZXing.Net.Maui" Version="0.1.0-preview.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\QrPopup.xaml.cs">
+	    <DependentUpon>QrPopup.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -68,7 +75,10 @@
 	  <MauiXaml Update="LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\QrPopupPage.xaml">
+	  <MauiXaml Update="Pages\QrCodeScannerPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\QrPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

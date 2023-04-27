@@ -27,7 +27,17 @@ namespace GoldenHour.Maui
 
                 _QRCodeHelper.SaveQr(qrCode);
             }
-            this.ShowPopup(new QrPopupPage(_QRCodeHelper.QrCodePath));
+            await this.ShowPopupAsync(new QrPopup(_QRCodeHelper.QrCodePath));
+        }
+
+        private async void ScanQrBtn_Clicked(object sender, EventArgs e)
+        {
+            var resultUserId = await this.ShowPopupAsync(new QrCodeScannerPopup());
+            await Shell.Current.DisplayAlert("Info", "Detected succesfully", "Ok");
+            Dispatcher.Dispatch(() =>
+            {
+                UserIdLbl.Text = resultUserId.ToString();
+            });
         }
     }
 }

@@ -3,13 +3,14 @@ using Plugin.Maui.ScreenBrightness;
 
 namespace GoldenHour.Maui.Pages;
 
-public partial class QrPopupPage : Popup
+public partial class QrPopup : Popup
 {
     private float currentBrightness;
-    public QrPopupPage(string qrCodePath)
+    public QrPopup(string qrCodePath)
 	{
 		InitializeComponent();
         QrImage.Source = qrCodePath;
+        QrImage.IsVisible = true;
         currentBrightness = ScreenBrightness.Default.Brightness;
         ScreenBrightness.Default.Brightness = 1;
     }

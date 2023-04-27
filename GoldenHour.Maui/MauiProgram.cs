@@ -4,6 +4,7 @@ using GoldenHour.Maui.Interfaces;
 using GoldenHour.Maui.Pages;
 using GoldenHour.Maui.Services;
 using GoldenHour.Maui.ViewModels;
+using ZXing.Net.Maui;
 
 namespace GoldenHour.Maui
 {
@@ -15,10 +16,17 @@ namespace GoldenHour.Maui
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseBarcodeReader()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                })
+                .ConfigureMauiHandlers(h =>
+                {
+                    h.AddHandler(typeof(ZXing.Net.Maui.Controls.CameraBarcodeReaderView), typeof(CameraBarcodeReaderViewHandler));
+                    h.AddHandler(typeof(ZXing.Net.Maui.Controls.CameraView), typeof(CameraViewHandler));
+                    h.AddHandler(typeof(ZXing.Net.Maui.Controls.BarcodeGeneratorView), typeof(BarcodeGeneratorViewHandler));
                 });
 
             #region Helpers

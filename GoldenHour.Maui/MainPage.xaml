@@ -14,6 +14,7 @@
 
             <Label
                 Text="Hello, World!"
+                x:Name="UserIdLbl"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
@@ -22,6 +23,12 @@
                 Text="Show QR code"
                 x:Name="ShowQrBtn"
                 Clicked="ShowQrBtn_Clicked"
+                HorizontalOptions="Center" />
+
+            <Button
+                Text="Scan QR code"
+                x:Name="ScanQrBtn"
+                Clicked="ScanQrBtn_Clicked"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>
