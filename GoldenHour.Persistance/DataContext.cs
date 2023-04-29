@@ -33,21 +33,25 @@ namespace GoldenHour.Persistance
                     {
                         Id = Guid.Parse("ebe5ba94-2c9d-46f4-8188-4ca1fc677d70"),
                         Name = "First — 0 (І)",
+                        SequenceNumber = 1
                     },
                     new BloodGroup
                     {
                         Id = Guid.Parse("89160257-98b1-4c69-bf39-fef973cad668"),
                         Name = "Second — A (ІІ)",
+                        SequenceNumber = 2
                     },
                     new BloodGroup
                     {
                         Id = Guid.Parse("7148549f-6cbd-47e1-86d5-62a9a5661c07"),
                         Name = "Third — B (ІІІ)",
+                        SequenceNumber = 3
                     },
                     new BloodGroup
                     {
                         Id = Guid.Parse("1daaa8e0-b24b-4a78-84f7-c0d5e958fccd"),
-                        Name = "Fourth — AB (ІV)"
+                        Name = "Fourth — AB (ІV)",
+                        SequenceNumber = 4
                     },
                 });
 

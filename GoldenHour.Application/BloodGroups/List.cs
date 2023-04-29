@@ -24,7 +24,7 @@ namespace GoldenHour.Application.BloodGroups
             }
             public async Task<IList<BaseEntity>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return _mapper.Map<IList<BaseEntity>>((await _bloodGroupsRepository.GetAll()).OrderBy(x => x.Name));
+                return _mapper.Map<IList<BaseEntity>>((await _bloodGroupsRepository.GetAll()).OrderBy(x => x.SequenceNumber));
             }
         }
     }
