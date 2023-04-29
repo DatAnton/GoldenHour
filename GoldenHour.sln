@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenHour.Domain", "Golden
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoldenHour.DTO", "GoldenHour.DTO\GoldenHour.DTO.csproj", "{7C305FCC-B63B-4E7B-BA3C-665B884FC23F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Domain.Services", "GoldenHour.Services\GoldenHour.Domain.Services.csproj", "{DDB709CF-6F58-4718-9AAD-455A82448378}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Domain.Services", "GoldenHour.Domain.Services\GoldenHour.Domain.Services.csproj", "{DDB709CF-6F58-4718-9AAD-455A82448378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Infrastructure.Repositories", "GoldenHour.Implementation\GoldenHour.Infrastructure.Repositories.csproj", "{FE6CA6EE-DC6A-485A-B72E-72775CFF60C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldenHour.Infrastructure.Repositories", "GoldenHour.Infrastructure.Repositories\GoldenHour.Infrastructure.Repositories.csproj", "{FE6CA6EE-DC6A-485A-B72E-72775CFF60C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

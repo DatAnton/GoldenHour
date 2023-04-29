@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GoldenHour.Persistance\GoldenHour.Persistance.csproj" />
-    <ProjectReference Include="..\GoldenHour.Services\GoldenHour.Domain.Services.csproj" />
+    <ProjectReference Include="..\GoldenHour.Domain.Services\GoldenHour.Domain.Services.csproj" />
   </ItemGroup>
 
 </Project>
