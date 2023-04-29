@@ -25,6 +25,7 @@ export default observer(function UsersManagement() {
                             <Table.HeaderCell>FullName</Table.HeaderCell>
                             <Table.HeaderCell>Email</Table.HeaderCell>
                             <Table.HeaderCell>Blood Group</Table.HeaderCell>
+                            <Table.HeaderCell>Brigade</Table.HeaderCell>
                             <Table.HeaderCell>Roles</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -37,6 +38,7 @@ export default observer(function UsersManagement() {
                                 <Table.Cell>{user.fullName}</Table.Cell>
                                 <Table.Cell>{user.email}</Table.Cell>
                                 <Table.Cell>{user.bloodGroupName}</Table.Cell>
+                                <Table.Cell>{user.brigadeShortName}</Table.Cell>
                                 <Table.Cell>{user.roles}</Table.Cell>
                             </Table.Row>
                         ))}

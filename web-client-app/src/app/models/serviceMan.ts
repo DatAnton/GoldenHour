@@ -7,6 +7,6 @@ export interface ServiceMan {
     bloodGroupId: string;
     bloodGroupName: string;
     brigadeId: string;
-    brigadeName: string;
+    brigadeShortName: string;
     roles: string
 }

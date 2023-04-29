@@ -50,12 +50,14 @@ namespace GoldenHour.Persistance
                 {
                     Id = Guid.Parse("9a17a2e4-d02f-42c6-b46a-7ac43afa4b5a"),
                     Name = "14th Mechanized Brigade 'Roman the Great' (MU A2331), Volodymyr-Volynsky, Volyn Oblast",
+                    ShortName = "14th MB",
                     Department = "97"
                 },
                 new Brigade
                 {
                     Id = Guid.Parse("cf2a2a3a-861f-45c9-9b35-456301093fa1"),
                     Name = "24th Mechanized Brigade 'King Daniel' (MU A0998), Yavoriv, Lviv Oblast",
+                    ShortName = "24th MB",
                     Department = "52"
                 }
             });
