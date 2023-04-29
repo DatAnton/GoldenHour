@@ -2,14 +2,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace GoldenHour.Persistance
 {
     public class DataContext : IdentityDbContext<ServiceMan>
     {
-        public DataContext(DbContextOptions<DataContext> contextOptions) : base(contextOptions)
+        private readonly IConfiguration _config;
+
+        public DataContext(DbContextOptions<DataContext> contextOptions, IConfiguration config) : base(contextOptions)
         {
-            
+            _config = config;
         }
 
         public DbSet<BloodGroup> BloodGroups { get; set; }
@@ -18,6 +21,10 @@ namespace GoldenHour.Persistance
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<BloodGroup>()
+                .HasIndex(b => b.Name)
+                .IsUnique();
 
             builder.Entity<BloodGroup>().ToTable("BloodGroups", "meta")
                 .HasData(new List<BloodGroup>
@@ -43,6 +50,10 @@ namespace GoldenHour.Persistance
                         Name = "Fourth — AB (ІV)"
                     },
                 });
+
+            builder.Entity<Brigade>()
+                .HasIndex(b => b.Name)
+                .IsUnique();
 
             builder.Entity<Brigade>().HasData(new List<Brigade>
             {
@@ -84,6 +95,10 @@ namespace GoldenHour.Persistance
                 }
             });
 
+            builder.Entity<ServiceMan>()
+                .HasIndex(b => b.NickName)
+                .IsUnique();
+
             var hasher = new PasswordHasher<ServiceMan>();
 
             builder.Entity<ServiceMan>().HasData(
@@ -94,7 +109,7 @@ namespace GoldenHour.Persistance
                     NormalizedEmail = "ADMIN@LOCALHOST.COM",
                     NormalizedUserName = "ADMIN",
                     UserName = "admin",
-                    PasswordHash = hasher.HashPassword(null, "P@ssw0rd"),
+                    PasswordHash = hasher.HashPassword(null, _config["DefaultPassword"]),
                     EmailConfirmed = true,
                     NickName = "admin",
                     FullName = "",
@@ -108,7 +123,7 @@ namespace GoldenHour.Persistance
                     NormalizedEmail = "MEDIC@LOCALHOST.COM",
                     NormalizedUserName = "MEDIC",
                     UserName = "medic",
-                    PasswordHash = hasher.HashPassword(null, "P@ssw0rd"),
+                    PasswordHash = hasher.HashPassword(null, _config["DefaultPassword"]),
                     EmailConfirmed = true,
                     NickName = "Voan",
                     FullName = "Bondar Volodymyr Ivanovych",
@@ -122,7 +137,7 @@ namespace GoldenHour.Persistance
                     NormalizedEmail = "SERVICEMAN@LOCALHOST.COM",
                     NormalizedUserName = "SERVICEMAN",
                     UserName = "serviceman",
-                    PasswordHash = hasher.HashPassword(null, "P@ssw0rd"),
+                    PasswordHash = hasher.HashPassword(null, _config["DefaultPassword"]),
                     EmailConfirmed = true,
                     NickName = "Prometey",
                     FullName = "Nazarenko Ivan Petrovych",

@@ -20,6 +20,27 @@ namespace GoldenHour.Controllers
             return Ok(await Mediator.Send(new List.Query()));
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create(DTO.Users.ServiceMan user)
+        {
+            return Ok(await Mediator.Send(new Create.Command { User = user }));
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Update(DTO.Users.ServiceMan user)
+        {
+            return Ok(await Mediator.Send(new Update.Command { User = user }));
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
+        }
+
         [HttpGet("generateQr")]
         public async Task<IActionResult> GenerateQrCode()
         {

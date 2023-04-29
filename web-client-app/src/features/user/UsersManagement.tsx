@@ -1,13 +1,23 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { useEffect, useState } from "react";
-import { Button, Grid, GridColumn, Header, Table } from "semantic-ui-react";
-import AddUserModal from "./AddUserModal";
+import {
+    Button,
+    Grid,
+    GridColumn,
+    Header,
+    Icon,
+    Table,
+} from "semantic-ui-react";
+import AddEditUserModal from "./AddEditUserModal";
 
 export default observer(function UsersManagement() {
     const { userStore } = useStore();
     const { users } = userStore;
     const [addUserModalOpen, setAddUserModalOpen] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState<string | undefined>(
+        undefined
+    );
 
     useEffect(() => {
         userStore.getUsers();
@@ -15,9 +25,13 @@ export default observer(function UsersManagement() {
 
     return (
         <>
-            <AddUserModal
+            <AddEditUserModal
+                userId={selectedUserId}
                 isOpen={addUserModalOpen}
-                onClose={() => setAddUserModalOpen(false)}
+                onClose={() => {
+                    setAddUserModalOpen(false);
+                    setSelectedUserId(undefined);
+                }}
             />
             <Grid divided="vertically">
                 <Grid.Row>
@@ -30,7 +44,10 @@ export default observer(function UsersManagement() {
                             icon="add"
                             fluid
                             content="New user"
-                            onClick={() => setAddUserModalOpen(true)}
+                            onClick={() => {
+                                setSelectedUserId(undefined);
+                                setAddUserModalOpen(true);
+                            }}
                         />
                     </GridColumn>
                 </Grid.Row>
@@ -44,7 +61,8 @@ export default observer(function UsersManagement() {
                                 <Table.HeaderCell>Email</Table.HeaderCell>
                                 <Table.HeaderCell>Blood Group</Table.HeaderCell>
                                 <Table.HeaderCell>Brigade</Table.HeaderCell>
-                                <Table.HeaderCell>Roles</Table.HeaderCell>
+                                <Table.HeaderCell>Role</Table.HeaderCell>
+                                <Table.HeaderCell>Action</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
 
@@ -61,7 +79,34 @@ export default observer(function UsersManagement() {
                                     <Table.Cell>
                                         {user.brigadeShortName}
                                     </Table.Cell>
-                                    <Table.Cell>{user.roles}</Table.Cell>
+                                    <Table.Cell>{user.role}</Table.Cell>
+                                    <Table.Cell>
+                                        <Icon
+                                            name="edit"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => {
+                                                setSelectedUserId(user.id);
+                                                setAddUserModalOpen(true);
+                                            }}
+                                        />
+                                        <Icon
+                                            name="trash"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => {
+                                                const confirmed =
+                                                    window.confirm(
+                                                        `Are you sure you want to delete ${user.userName}?`
+                                                    );
+                                                if (confirmed) {
+                                                    userStore
+                                                        .deleteUser(user.id)
+                                                        .then(() =>
+                                                            userStore.getUsers()
+                                                        );
+                                                }
+                                            }}
+                                        />
+                                    </Table.Cell>
                                 </Table.Row>
                             ))}
                         </Table.Body>

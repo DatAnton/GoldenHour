@@ -13,6 +13,12 @@ namespace GoldenHour.Infrastructure.Repositories
             _dataContext = dataContext;
         }
 
+        public async Task Create(T entity)
+        {
+            await _dataContext.Set<T>().AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
+        }
+
         public async Task<List<T>> GetAll()
         {
             return await _dataContext.Set<T>().ToListAsync();

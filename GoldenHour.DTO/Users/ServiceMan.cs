@@ -11,6 +11,7 @@
         public string BloodGroupName { get; set; }
         public Guid BrigadeId { get; set; }
         public string BrigadeShortName { get; set; }
-        public string Roles { get; set; }
+        public string Role { get; set; }
+        public string RoleId { get; set; }
     }
 }

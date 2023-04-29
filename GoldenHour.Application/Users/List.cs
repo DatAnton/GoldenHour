@@ -17,11 +17,15 @@ namespace GoldenHour.Application.Users
         public class Handler : IRequestHandler<Query, IList<ServiceMan>>
         {
             private readonly UserManager<Domain.ServiceMan> _userManager;
+            private readonly RoleManager<IdentityRole> _roleManager;
             private readonly IMapper _mapper;
 
-            public Handler(UserManager<Domain.ServiceMan> userManager, IMapper mapper)
+            public Handler(UserManager<Domain.ServiceMan> userManager, 
+                RoleManager<IdentityRole> roleManager, 
+                IMapper mapper)
             {
                 _userManager = userManager;
+                _roleManager = roleManager;
                 _mapper = mapper;
             }
 
@@ -29,6 +33,7 @@ namespace GoldenHour.Application.Users
             {
                 var users = _userManager.Users;
                 var userRolesDictionary = new Dictionary<string, string>();
+                var rolesDictionary = await _roleManager.Roles.ToDictionaryAsync(r => r.Name, r => r.Id);
                 
                 var usersList = await users.ToListAsync();
                 foreach(var user in usersList)
@@ -38,7 +43,8 @@ namespace GoldenHour.Application.Users
                 }
 
                 return await users.ProjectTo<ServiceMan>(_mapper.ConfigurationProvider, 
-                    new { usersRoles = userRolesDictionary }).ToListAsync();
+                    new { usersRoles = userRolesDictionary, roles = rolesDictionary })
+                    .ToListAsync();
             }
         }
     }
