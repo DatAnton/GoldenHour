@@ -20,15 +20,15 @@ namespace GoldenHour.Extensions
             builder.Services.AddDbContext<DataContext>(o =>
                 o.UseSqlServer(builder.Configuration.GetConnectionString("DataContext")));
 
-            builder.Services.AddIdentityCore<ServiceMan>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<DataContext>();
-
             return builder;
         }
 
         public static WebApplicationBuilder AddAuthServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddIdentityCore<ServiceMan>()
+               .AddRoles<IdentityRole>()
+               .AddEntityFrameworkStores<DataContext>();
+
             builder.Services.AddCors(o =>
             {
                 o.AddPolicy("AllowAll", a => a.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
@@ -68,7 +68,7 @@ namespace GoldenHour.Extensions
 
         public static WebApplicationBuilder AddAdditionalServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddMediatR(typeof(GenerateQRCode.Handler).Assembly);
+            builder.Services.AddMediatR(typeof(List.Handler).Assembly);
             builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             return builder;

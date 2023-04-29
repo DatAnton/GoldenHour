@@ -1,8 +1,9 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
+import { ServiceMan } from "../models/serviceMan";
 
 export default class UserStore {
-    response: string | undefined = undefined;
+    users: ServiceMan[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -12,7 +13,7 @@ export default class UserStore {
         try {
             const response = await agent.Users.getUsers();
             runInAction(() => {
-                this.response = response;
+                this.users = response;
             });
         } catch (error) {
             throw error;

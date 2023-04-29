@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
+import { ServiceMan } from '../models/serviceMan';
 
 axios.defaults.baseURL = 'http://localhost:8020/api';
 
@@ -26,7 +27,7 @@ const Account = {
 }
 
 const Users = {
-    getUsers: () => requests.get<string>('/users'),
+    getUsers: () => requests.get<ServiceMan[]>('/users'),
 }
 
 const agent = {

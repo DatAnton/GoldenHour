@@ -15,11 +15,7 @@ export default observer(function NavBar() {
                     Golden Hour
                 </Menu.Item>
                 <Menu.Item position="right">
-                    <Image
-                        src="assets/user.png"
-                        avatar
-                        spaced="right"
-                    />
+                    <Image src="assets/user.png" avatar spaced="right" />
                     <Dropdown pointing="top left" text={user?.userName}>
                         <Dropdown.Menu>
                             <Dropdown.Item

@@ -1,6 +1,5 @@
 ﻿using GoldenHour.Application.Users;
-using GoldenHour.Domain;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -10,17 +9,15 @@ namespace GoldenHour.Controllers
     [Route("api/[controller]")]
     public class UsersController : BaseApiController
     {
-        private readonly UserManager<ServiceMan> _userManager;
-
-        public UsersController(UserManager<ServiceMan> userManager)
+        public UsersController()
         {
-            _userManager = userManager;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Get()
         {
-            return Ok("Users");
+            return Ok(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("generateQr")]
