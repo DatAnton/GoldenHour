@@ -1,15 +1,24 @@
 import { createContext, useContext } from "react";
 import AccountStore from "./accountStore";
 import UserStore from "./userStore";
+import RoleStore from "./roleStore";
+import BloodGroupStore from "./bloodGroupStore";
+import BrigadeStore from "./brigadeStore";
 
 interface Store {
     accountStore: AccountStore;
     userStore: UserStore;
+    roleStore: RoleStore;
+    bloodGroupStore: BloodGroupStore;
+    brigadeStore: BrigadeStore;
 }
 
 export const store: Store = {
     accountStore: new AccountStore(),
-    userStore: new UserStore()
+    userStore: new UserStore(),
+    roleStore: new RoleStore(),
+    bloodGroupStore: new BloodGroupStore(),
+    brigadeStore: new BrigadeStore()
 };
 
 export const StoreContext = createContext(store);

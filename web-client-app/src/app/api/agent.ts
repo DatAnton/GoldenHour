@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
 import { ServiceMan } from '../models/serviceMan';
+import { BaseEntity } from '../models/baseEntity';
 
 axios.defaults.baseURL = 'http://localhost:8020/api';
 
@@ -30,9 +31,24 @@ const Users = {
     getUsers: () => requests.get<ServiceMan[]>('/users'),
 }
 
+const Roles = {
+    getRoles: () => requests.get<BaseEntity[]>('/roles'),
+}
+
+const BloodGroups = {
+    getBloodGroups: () => requests.get<BaseEntity[]>('/bloodGroups'),
+}
+
+const Brigades = {
+    getBrigades: () => requests.get<BaseEntity[]>('/brigades'),
+}
+
 const agent = {
     Account,
-    Users
+    Users,
+    Roles,
+    BloodGroups,
+    Brigades
 }
 
 export default agent;

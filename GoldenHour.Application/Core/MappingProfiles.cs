@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using GoldenHour.DTO;
+using Microsoft.AspNetCore.Identity;
 
 namespace GoldenHour.Application.Core
 {
@@ -13,6 +15,10 @@ namespace GoldenHour.Application.Core
                 .ForMember(x => x.BloodGroupName, o => o.MapFrom(x => x.BloodGroup.Name))
                 .ForMember(x => x.BrigadeShortName, o => o.MapFrom(x => x.Brigade.ShortName))
                 .ForMember(x => x.Roles, o => o.MapFrom(x => usersRoles != null ? usersRoles[x.Id] : string.Empty));
+
+            CreateMap<IdentityRole, BaseEntity>();
+            CreateMap<Domain.BloodGroup, BaseEntity>();
+            CreateMap<Domain.Brigade, BaseEntity>();
         }
     }
 }
