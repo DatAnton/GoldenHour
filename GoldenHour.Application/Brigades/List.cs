@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using GoldenHour.Domain.Services;
 using GoldenHour.DTO;
-using GoldenHour.Persistance;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace GoldenHour.Application.Brigades
 {
@@ -15,17 +14,17 @@ namespace GoldenHour.Application.Brigades
 
         public class Handler : IRequestHandler<Query, IList<BaseEntity>>
         {
-            private readonly DataContext _context;
+            private readonly IBrigadesRepository _brigadesRepository;
             private readonly IMapper _mapper;
 
-            public Handler(DataContext context, IMapper mapper)
+            public Handler(IBrigadesRepository brigadesRepository, IMapper mapper)
             {
-                _context = context;
+                _brigadesRepository = brigadesRepository;
                 _mapper = mapper;
             }
             public async Task<IList<BaseEntity>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return _mapper.Map<IList<BaseEntity>>(await _context.Brigades.OrderBy(x => x.Name).ToListAsync());
+                return _mapper.Map<IList<BaseEntity>>((await _brigadesRepository.GetAll()).OrderBy(x => x.Name));
             }
         }
     }

@@ -40,6 +40,7 @@ namespace GoldenHour
             });
 
             builder.AddDbServices();
+            builder.AddInfrastructureRepositories();
             builder.AddAuthServices();
             builder.AddAdditionalServices();
 

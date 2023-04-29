@@ -1,6 +1,8 @@
 ﻿using GoldenHour.Application.Core;
 using GoldenHour.Application.Users;
 using GoldenHour.Domain;
+using GoldenHour.Domain.Services;
+using GoldenHour.Infrastructure.Repositories;
 using GoldenHour.Persistance;
 using GoldenHour.Services;
 using MediatR;
@@ -19,6 +21,14 @@ namespace GoldenHour.Extensions
         {
             builder.Services.AddDbContext<DataContext>(o =>
                 o.UseSqlServer(builder.Configuration.GetConnectionString("DataContext")));
+
+            return builder;
+        }
+
+        public static WebApplicationBuilder AddInfrastructureRepositories(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<IBrigadesRepository, BrigadesRepository>();
+            builder.Services.AddScoped<IBloodGroupsRepository, BloodGroupsRepository>();
 
             return builder;
         }

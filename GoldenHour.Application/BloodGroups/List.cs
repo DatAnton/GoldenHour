@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using GoldenHour.Domain.Services;
 using GoldenHour.DTO;
-using GoldenHour.Persistance;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace GoldenHour.Application.BloodGroups
 {
@@ -15,17 +14,17 @@ namespace GoldenHour.Application.BloodGroups
 
         public class Handler : IRequestHandler<Query, IList<BaseEntity>>
         {
-            private readonly DataContext _context;
+            private readonly IBloodGroupsRepository _bloodGroupsRepository;
             private readonly IMapper _mapper;
 
-            public Handler(DataContext context, IMapper mapper)
+            public Handler(IBloodGroupsRepository bloodGroupsRepository, IMapper mapper)
             {
-                _context = context;
+                _bloodGroupsRepository = bloodGroupsRepository;
                 _mapper = mapper;
             }
             public async Task<IList<BaseEntity>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return _mapper.Map<IList<BaseEntity>>(await _context.BloodGroups.OrderBy(x => x.Name).ToListAsync());
+                return _mapper.Map<IList<BaseEntity>>((await _bloodGroupsRepository.GetAll()).OrderBy(x => x.Name));
             }
         }
     }
