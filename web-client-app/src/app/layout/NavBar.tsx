@@ -30,7 +30,7 @@ export default observer(function NavBar() {
                             <Dropdown.Item
                                 onClick={logout}
                                 text="Logout"
-                                icon="power"
+                                icon="log out"
                             />
                         </Dropdown.Menu>
                     </Dropdown>
