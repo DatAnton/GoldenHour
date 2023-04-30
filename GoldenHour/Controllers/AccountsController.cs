@@ -43,9 +43,11 @@ namespace GoldenHour.Controllers
         {
             var user = await _userManager.Users
                 .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
+            var role = (await _userManager.GetRolesAsync(user!)).First();
 
             return user != null ? 
-                Ok(new LoginResponse { UserId = user.Id, UserName = user.UserName}) : Unauthorized();
+                Ok(new LoginResponse { UserId = user.Id, UserName = user.UserName, Role = role }) 
+                : Unauthorized();
         }
 
 

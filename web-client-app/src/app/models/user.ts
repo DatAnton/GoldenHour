@@ -2,7 +2,7 @@ export interface User {
     userName: string;
     token: string;
     userId: string;
-    roles: string;
+    role: string;
 }
 
 export interface UserFormValues {

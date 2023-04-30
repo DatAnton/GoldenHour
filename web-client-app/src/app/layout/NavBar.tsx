@@ -5,7 +5,7 @@ import { useStore } from "../stores/store";
 
 export default observer(function NavBar() {
     const {
-        accountStore: { user, logout },
+        accountStore: { user, logout, isAdmin },
     } = useStore();
 
     return (
@@ -14,13 +14,16 @@ export default observer(function NavBar() {
                 <Menu.Item as={NavLink} to={"/"} header>
                     Golden Hour
                 </Menu.Item>
+                {isAdmin ? (
+                    <Menu.Item as={NavLink} to="/users" name="Users" />
+                ) : null}
                 <Menu.Item position="right">
                     <Image src="assets/user.png" avatar spaced="right" />
                     <Dropdown pointing="top left" text={user?.userName}>
                         <Dropdown.Menu>
                             <Dropdown.Item
                                 as={Link}
-                                to={`/profiles/${user?.userName}`}
+                                to="/profile"
                                 text="My Profile"
                                 icon="user"
                             />

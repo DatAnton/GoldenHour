@@ -4,6 +4,7 @@ import { ServiceMan } from "../models/serviceMan";
 
 export default class UserStore {
     users: ServiceMan[] = [];
+    userInfo: ServiceMan | undefined = undefined;
 
     constructor() {
         makeAutoObservable(this);
@@ -42,5 +43,16 @@ export default class UserStore {
         } catch (error) {
             throw error;
         }
-    }
+    };
+
+    getUserInfo = async () => {
+        try {
+            var response = await agent.Users.getUserInfo();
+            runInAction(() => {
+                this.userInfo = response;
+            });
+        } catch (error) {
+            throw error;
+        }
+    };
 }

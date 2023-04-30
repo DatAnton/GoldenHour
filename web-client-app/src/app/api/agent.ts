@@ -35,7 +35,8 @@ const Users = {
     getUsers: () => requests.get<ServiceMan[]>("/users"),
     createUser: (user: ServiceMan) => requests.post("/users", user),
     updateUser: (user: ServiceMan) => requests.put("/users", user),
-    deleteUser: (id: string) => requests.del(`/users/${id}`)
+    deleteUser: (id: string) => requests.del(`/users/${id}`),
+    getUserInfo: () => requests.get<ServiceMan>("/users/getInfo"),
 };
 
 const Roles = {

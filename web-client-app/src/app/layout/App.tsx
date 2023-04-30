@@ -10,20 +10,29 @@ import LoadingComponent from "./LoadingComponent";
 function App() {
     const location = useLocation();
     const { accountStore } = useStore();
+    const { isAdmin } = accountStore;
 
     useEffect(() => {
         if (accountStore.token) {
-            accountStore.getUser().finally(() => accountStore.setAppLoaded());
+            accountStore
+                .getUser()
+                .finally(() => accountStore.setAppLoaded())
+                .finally(() => {
+                    if (!isAdmin && location.pathname !== "/profile")
+                        window.location.href = "/profile";
+                });
         } else {
             accountStore.setAppLoaded();
         }
-    }, [accountStore]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountStore, location]);
 
-    if(!accountStore.appLoaded) return <LoadingComponent content="Loading app..." />
+    if (!accountStore.appLoaded)
+        return <LoadingComponent content="Loading app..." />;
 
     return (
         <>
-            {location.pathname === "/" ? (
+            {location.pathname === "/" || !accountStore.isLoggedIn ? (
                 <HomePage />
             ) : (
                 <>

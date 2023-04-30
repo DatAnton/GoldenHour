@@ -2,9 +2,13 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { Button, Container, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
+import { useState } from "react";
+import LoginForm from "../account/LoginForm";
 
 export default observer(function HomePage() {
     const { accountStore } = useStore();
+    const [loginFormOpen, setLoginFormOpen] = useState(false);
+
     return (
         <Segment inverted textAlign="center" vertical className="masthead">
             <Container text>
@@ -18,13 +22,21 @@ export default observer(function HomePage() {
                             inverted
                             content="This is system for military medicine."
                         />
-                        <Button as={Link} to="/users" size="huge" inverted>
-                            Go to Users!
+                        <Button as={Link} to="/profile" size="huge" inverted>
+                            Go to Profile!
                         </Button>
                     </>
                 ) : (
                     <>
-                        <Button size="huge" as={Link} to="/login" inverted>
+                        <LoginForm
+                            isOpen={loginFormOpen}
+                            onClose={() => setLoginFormOpen(false)}
+                        />
+                        <Button
+                            size="huge"
+                            inverted
+                            onClick={() => setLoginFormOpen(true)}
+                        >
                             Login!
                         </Button>
                     </>
