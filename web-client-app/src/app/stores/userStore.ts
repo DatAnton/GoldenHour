@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { ServiceMan } from "../models/serviceMan";
+import { ChangePasswordData } from "../models/changePasswordData";
 
 export default class UserStore {
     users: ServiceMan[] = [];
@@ -55,4 +56,12 @@ export default class UserStore {
             throw error;
         }
     };
+
+    changePassword = async (data: ChangePasswordData) => {
+        try {
+            await agent.Users.changePassword(data);
+        } catch (error) {
+            throw error;
+        }
+    }
 }

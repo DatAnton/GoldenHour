@@ -3,6 +3,7 @@ import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 import { ServiceMan } from "../models/serviceMan";
 import { BaseEntity } from "../models/baseEntity";
+import { ChangePasswordData } from "../models/changePasswordData";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -37,6 +38,8 @@ const Users = {
     updateUser: (user: ServiceMan) => requests.put("/users", user),
     deleteUser: (id: string) => requests.del(`/users/${id}`),
     getUserInfo: () => requests.get<ServiceMan>("/users/getInfo"),
+    changePassword: (data: ChangePasswordData) =>
+        requests.put("/users/changePassword", data),
 };
 
 const Roles = {

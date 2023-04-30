@@ -1,12 +1,15 @@
 import { observer } from "mobx-react-lite";
 import { Card, Container, Header, Icon, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 export default observer(function UserProfile() {
     const { userStore, accountStore } = useStore();
     const { userInfo } = userStore;
     const { user } = accountStore;
+    const [changePasswordModalOpen, setChangePasswordModalOpen] =
+        useState(false);
 
     useEffect(() => {
         userStore.getUserInfo();
@@ -14,6 +17,10 @@ export default observer(function UserProfile() {
 
     return (
         <Container textAlign="center">
+            <ChangePasswordModal
+                isOpen={changePasswordModalOpen}
+                onClose={() => setChangePasswordModalOpen(false)}
+            />
             <Segment>
                 <Header as="h2" icon textAlign="center">
                     <Icon name="user" circular />
@@ -21,10 +28,19 @@ export default observer(function UserProfile() {
                 </Header>
 
                 <Card fluid>
-                    <Card.Content
-                        header={userInfo?.nickName}
-                        meta={userInfo?.bloodGroupName}
-                    />
+                    <Card.Content header={userInfo?.nickName}></Card.Content>
+                    <Card.Meta>
+                        {userInfo?.bloodGroupName}
+                        <Icon
+                            name="setting"
+                            circular
+                            onClick={() => setChangePasswordModalOpen(true)}
+                            style={{
+                                cursor: "pointer",
+                                margin: "0 0 5px 10px",
+                            }}
+                        />
+                    </Card.Meta>
                     <Card.Content description={userInfo?.fullName} />
                     <Card.Content description={userInfo?.email} />
                     <Card.Content description={userInfo?.brigadeShortName} />

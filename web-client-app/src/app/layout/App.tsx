@@ -6,6 +6,7 @@ import HomePage from "../../features/home/HomePage";
 import { useStore } from "../stores/store";
 import { useEffect } from "react";
 import LoadingComponent from "./LoadingComponent";
+import { router } from "../router/Routes";
 
 function App() {
     const location = useLocation();
@@ -19,7 +20,7 @@ function App() {
                 .finally(() => accountStore.setAppLoaded())
                 .finally(() => {
                     if (!isAdmin && location.pathname !== "/profile")
-                        window.location.href = "/profile";
+                        router.navigate("/profile");
                 });
         } else {
             accountStore.setAppLoaded();

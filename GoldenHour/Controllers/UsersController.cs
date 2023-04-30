@@ -1,4 +1,5 @@
 ﻿using GoldenHour.Application.Users;
+using GoldenHour.DTO.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -42,7 +43,7 @@ namespace GoldenHour.Controllers
         {
             return File(await Mediator.Send(new GenerateQRCode.Query 
                 { UserId = User.FindFirstValue(ClaimTypes.NameIdentifier), 
-                UserName = User.FindFirstValue(ClaimTypes.Name) }), "image/png");
+                    UserName = User.FindFirstValue(ClaimTypes.Name) }), "image/png");
         }
 
         [HttpGet("getInfo")]
@@ -52,6 +53,15 @@ namespace GoldenHour.Controllers
 
             return !string.IsNullOrEmpty(userName) ? Ok(await Mediator.Send(new Details.Query
                 { UserName = userName })) : Unauthorized();
+        }
+
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordData changePassword)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return Ok(await Mediator.Send
+                (new ChangePassword.Command { UserId = userId, Data = changePassword }));
         }
     }
 }
