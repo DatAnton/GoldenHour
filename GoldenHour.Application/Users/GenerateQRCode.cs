@@ -8,6 +8,7 @@ namespace GoldenHour.Application.Users
         public class Query : IRequest<byte[]>
         {
             public string UserId { get; set; }
+            public string UserName { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, byte[]>
@@ -16,7 +17,8 @@ namespace GoldenHour.Application.Users
             {
                 using (var qrGenerator = new QRCodeGenerator())
                 {
-                    var qrCodeData = qrGenerator.CreateQrCode(request.UserId, QRCodeGenerator.ECCLevel.Q);
+                    var qrCodeData = qrGenerator.CreateQrCode($"{request.UserId}|{request.UserName}", 
+                        QRCodeGenerator.ECCLevel.Q);
                     var qrCode = new BitmapByteQRCode(qrCodeData);
 
                     var qrCodeBitmap = qrCode.GetGraphic(20);

@@ -5,11 +5,11 @@ namespace GoldenHour.Maui.ViewModels
 {
     public partial class LoadingPageViewModel : BaseViewModel
     {
-        private readonly TokenHandlerHelper _tokenHandlerHelper;
+        private readonly UserInfoHelper _userInfoHelper;
 
-        public LoadingPageViewModel(TokenHandlerHelper tokenHandlerHelper)
+        public LoadingPageViewModel(UserInfoHelper userInfoHelper)
         {
-            _tokenHandlerHelper = tokenHandlerHelper;
+            _userInfoHelper = userInfoHelper;
             CheckUserLoginDetails();
         }
 
@@ -31,9 +31,9 @@ namespace GoldenHour.Maui.ViewModels
                 }
                 else
                 {
-                    _tokenHandlerHelper.FillUserInfo(jsonToken);
+                    _userInfoHelper.FillUserInfo(jsonToken);
 
-                    //MenuBuilder.BuildMenu();
+                    TabsBuilder.BuildNavTabs();
                     await GoToMainPage();
                 }
             }

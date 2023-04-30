@@ -7,7 +7,7 @@
              Shell.NavBarIsVisible="False"
              Title="Login">
     <VerticalStackLayout
-        Spacing="25"
+        Spacing="20"
         Padding="30, 0"
         VerticalOptions="Center">
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
@@ -18,14 +18,14 @@
         </VerticalStackLayout>
 
         <Frame Padding="5">
-            <Entry x:Name="UserName" Placeholder="UserName" Text="{Binding UserName}" IsEnabled="{Binding IsNotLoading}" />
+            <Entry x:Name="UserName" Placeholder="UserName" Text="{Binding UserName}" FontSize="Large" IsEnabled="{Binding IsNotLoading}" />
         </Frame>
 
         <Frame Padding="5">
-            <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding Password}" IsEnabled="{Binding IsNotLoading}" />
+            <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding Password}" FontSize="Large" IsEnabled="{Binding IsNotLoading}" />
         </Frame>
 
-        <Button Text="Log in" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center"
+        <Button Text="Log in" HeightRequest="60" HorizontalOptions="Fill" FontSize="Large"
             Command="{Binding LoginCommand}" IsEnabled="{Binding IsNotLoading}" />
 
     </VerticalStackLayout>

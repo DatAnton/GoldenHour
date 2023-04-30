@@ -80,7 +80,13 @@ export default observer(function AddEditUserModal(props: AddUserModalProps) {
         data: DropdownProps
     ) {
         const { name, value } = data;
-        setUser({ ...user, [name]: value });
+        setUser({
+            ...user,
+            [name]: value,
+            brigadeShortName: "",
+            bloodGroupName: "",
+            role: "",
+        });
     }
 
     const saveOk = () => {

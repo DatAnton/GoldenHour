@@ -9,6 +9,9 @@
         public const string TOKEN_KEY_SECURE_STORAGE = "Token";
         public const string AUTH_HEADER_BEARER = "Bearer";
 
-        public const string QR_CODE_NAME = "qrCode.png";
+        public const string QR_CODE_NAME = "{0}_qrCode.png";
+
+        public const string MEDIC_ROLE_NAME = "Medic";
+        public const string USER_PREFERENCES_KEY = "User";
     }
 }

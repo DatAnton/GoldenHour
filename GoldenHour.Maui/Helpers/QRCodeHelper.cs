@@ -2,8 +2,9 @@
 {
     public class QRCodeHelper
     {
-        public string QrCodePath => 
-            Path.Combine(FileSystem.AppDataDirectory, Constants.QR_CODE_NAME);
+        public static string QrCodePath => 
+            Path.Combine(FileSystem.AppDataDirectory, 
+                string.Format(Constants.QR_CODE_NAME, App.UserInfo.UserId));
 
         public void SaveQr(byte[] qrCode)
         {

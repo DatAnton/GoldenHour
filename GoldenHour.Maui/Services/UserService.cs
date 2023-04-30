@@ -1,4 +1,6 @@
-﻿using GoldenHour.Maui.Interfaces;
+﻿using GoldenHour.Maui.DTO;
+using GoldenHour.Maui.Interfaces;
+using Newtonsoft.Json;
 
 namespace GoldenHour.Maui.Services
 {
@@ -8,8 +10,7 @@ namespace GoldenHour.Maui.Services
         {
             try
             {
-                await SetAuthToken();
-                var response = await _httpClient.GetAsync("/api/users/generateQr");
+                var response = await GetWithHeadersAsync("/api/users/generateQr");
 
                 response.EnsureSuccessStatusCode();
                 var fileStream = await response.Content.ReadAsStreamAsync();
@@ -17,6 +18,22 @@ namespace GoldenHour.Maui.Services
                 fileStream.CopyTo(memoryStream);
 
                 return memoryStream.ToArray();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<ServiceMan> GetInfoAsync()
+        {
+            try
+            {
+                var response = await GetWithHeadersAsync("/api/users/getInfo");
+
+                response.EnsureSuccessStatusCode();
+                return JsonConvert.DeserializeObject<ServiceMan>
+                    (await response.Content.ReadAsStringAsync());
             }
             catch (Exception)
             {

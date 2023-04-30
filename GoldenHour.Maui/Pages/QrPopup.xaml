@@ -15,7 +15,8 @@
         <Button Text="Close"
                 x:Name="CloseBtn"
                 Margin="10"
-                Clicked="CloseBtn_Clicked" />
+                Clicked="CloseBtn_Clicked"
+                FontSize="Large" />
 
     </VerticalStackLayout>
 </mct:Popup>

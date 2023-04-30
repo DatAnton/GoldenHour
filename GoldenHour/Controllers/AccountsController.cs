@@ -17,7 +17,8 @@ namespace GoldenHour.Controllers
         private readonly UserManager<ServiceMan> _userManager;
         private readonly TokenService _tokenService;
 
-        public AccountsController(UserManager<ServiceMan> userManager, TokenService tokenService)
+        public AccountsController(UserManager<ServiceMan> userManager, 
+            TokenService tokenService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
@@ -38,12 +39,13 @@ namespace GoldenHour.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<LoginResponse>> GetCurrentUser()
+        public async Task<ActionResult<DTO.Users.ServiceMan>> GetCurrentUser()
         {
             var user = await _userManager.Users
                 .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
 
-            return user != null ? Ok(await CreateUserObject(user)) : Unauthorized();
+            return user != null ? 
+                Ok(new LoginResponse { UserId = user.Id, UserName = user.UserName}) : Unauthorized();
         }
 
 

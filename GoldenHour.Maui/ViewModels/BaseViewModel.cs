@@ -8,6 +8,6 @@ namespace GoldenHour.Maui.ViewModels
         [NotifyPropertyChangedFor(nameof(IsNotLoading))]
         bool isLoading;
 
-        public bool IsNotLoading => !isLoading;
+        public bool IsNotLoading => !IsLoading;
     }
 }

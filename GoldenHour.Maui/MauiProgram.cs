@@ -31,7 +31,7 @@ namespace GoldenHour.Maui
 
             #region Helpers
 
-            builder.Services.AddSingleton<TokenHandlerHelper>();
+            builder.Services.AddSingleton<UserInfoHelper>();
             builder.Services.AddSingleton<QRCodeHelper>();
 
             #endregion

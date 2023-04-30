@@ -10,13 +10,16 @@ namespace GoldenHour.Maui.ViewModels
     public partial class LoginPageViewModel : BaseViewModel
     {
         private readonly IAccountService _accountService;
-        private readonly TokenHandlerHelper _tokenHandlerHelper;
+        private readonly IUserService _userService;
+        private readonly UserInfoHelper _userInfoHelper;
 
         public LoginPageViewModel(IAccountService accountService,
-            TokenHandlerHelper tokenHandlerHelper)
+            IUserService userService,
+            UserInfoHelper userInfoHelper)
         {
             _accountService = accountService;
-            _tokenHandlerHelper = tokenHandlerHelper;
+            _userService = userService;
+            _userInfoHelper = userInfoHelper;
         }
 
         [ObservableProperty]
@@ -49,9 +52,13 @@ namespace GoldenHour.Maui.ViewModels
                     await SecureStorage.SetAsync(Constants.TOKEN_KEY_SECURE_STORAGE, response.Token);
 
                     var jsonToken = new JwtSecurityTokenHandler().ReadToken(response.Token) as JwtSecurityToken;
-                    _tokenHandlerHelper.FillUserInfo(jsonToken);
+                    _userInfoHelper.FillUserInfo(jsonToken);
 
-                    //MenuBuilder.BuildMenu();
+                    _userInfoHelper.SaveUser(await _userService.GetInfoAsync());
+
+                    TabsBuilder.BuildNavTabs();
+                    UserName = string.Empty;
+                    Password = string.Empty;
                     await Shell.Current.GoToAsync($"{nameof(MainPage)}");
                 }
                 else

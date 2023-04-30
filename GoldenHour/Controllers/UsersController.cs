@@ -9,10 +9,6 @@ namespace GoldenHour.Controllers
     [Route("api/[controller]")]
     public class UsersController : BaseApiController
     {
-        public UsersController()
-        {
-        }
-
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
@@ -45,7 +41,17 @@ namespace GoldenHour.Controllers
         public async Task<IActionResult> GenerateQrCode()
         {
             return File(await Mediator.Send(new GenerateQRCode.Query 
-                { UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) }), "image/png");
+                { UserId = User.FindFirstValue(ClaimTypes.NameIdentifier), 
+                UserName = User.FindFirstValue(ClaimTypes.Name) }), "image/png");
+        }
+
+        [HttpGet("getInfo")]
+        public async Task<IActionResult> GetInfo()
+        {
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+
+            return !string.IsNullOrEmpty(userName) ? Ok(await Mediator.Send(new Details.Query
+                { UserName = userName })) : Unauthorized();
         }
     }
 }

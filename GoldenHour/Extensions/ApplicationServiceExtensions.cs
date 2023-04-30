@@ -29,6 +29,7 @@ namespace GoldenHour.Extensions
         {
             builder.Services.AddScoped<IBrigadesRepository, BrigadesRepository>();
             builder.Services.AddScoped<IBloodGroupsRepository, BloodGroupsRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             return builder;
         }
