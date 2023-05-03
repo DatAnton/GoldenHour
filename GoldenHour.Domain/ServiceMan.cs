@@ -10,5 +10,8 @@ namespace GoldenHour.Domain
         public Guid BloodGroupId { get;set; }
         public Brigade Brigade { get; set; }
         public Guid BrigadeId { get; set; }
+        public List<Incident> Incidents { get; set; }
+        public List<Incident> HelpedIncidents { get; set; }
+
     }
 }

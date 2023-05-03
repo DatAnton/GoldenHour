@@ -17,10 +17,24 @@ namespace GoldenHour.Persistance
 
         public DbSet<BloodGroup> BloodGroups { get; set; }
         public DbSet<Brigade> Brigades { get; set; }
+        public DbSet<Incident> Incidents { get; set; }
+        public DbSet<HelpPhoto> HelpPhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Incident>()
+                .HasOne(i => i.ServiceMan)
+                .WithMany(s => s.Incidents)
+                .HasForeignKey(i => i.ServiceManId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Incident>()
+                .HasOne(i => i.Medic)
+                .WithMany(s => s.HelpedIncidents)
+                .HasForeignKey(i => i.MedicId)
+                .OnDelete(DeleteBehavior.NoAction); ;
 
             builder.Entity<BloodGroup>()
                 .HasIndex(b => b.Name)
