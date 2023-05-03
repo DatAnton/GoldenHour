@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
 namespace GoldenHour.Maui.Services
 {
@@ -18,6 +19,12 @@ namespace GoldenHour.Maui.Services
         {
             await SetAuthToken();
             return await _httpClient.GetAsync(url);
+        }
+
+        protected async Task<HttpResponseMessage> PutWithHeadersAsync<T>(string url, T entity)
+        {
+            await SetAuthToken();
+            return await _httpClient.PutAsJsonAsync(url, entity);
         }
 
         private async Task SetAuthToken()

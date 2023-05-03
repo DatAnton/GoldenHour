@@ -6,5 +6,6 @@ namespace GoldenHour.Maui.Interfaces
     {
         Task<byte[]> GetImageAsync();
         Task<ServiceMan> GetInfoAsync();
+        Task UpdatePassword(ChangePasswordModel changePasswordModel);
     }
 }

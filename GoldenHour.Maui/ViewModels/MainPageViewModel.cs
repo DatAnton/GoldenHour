@@ -44,11 +44,17 @@ namespace GoldenHour.Maui.ViewModels
             if(await Shell.Current.DisplayAlert
                 ("Confirmation", "Are you sure you want to log out?", "Yes", "No"))
             {
-                SecureStorage.Remove(Constants.TOKEN_KEY_SECURE_STORAGE);
-                _userInfoHelper.CleanUserInfo();
-                TabsBuilder.BuildNavTabs();
+                CleanAuthData();
                 await Shell.Current.GoToAsync(nameof(LoginPage));
             }
+        }
+
+        public void CleanAuthData()
+        {
+            SecureStorage.Remove(Constants.TOKEN_KEY_SECURE_STORAGE);
+            _userInfoHelper.CleanUserInfo();
+            _userInfoHelper.RemoveUserFromStore();
+            TabsBuilder.BuildNavTabs();
         }
 
         [RelayCommand]

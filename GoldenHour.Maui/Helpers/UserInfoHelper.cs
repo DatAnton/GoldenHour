@@ -34,6 +34,11 @@ namespace GoldenHour.Maui.Helpers
             Preferences.Set(Constants.USER_PREFERENCES_KEY, json);
         }
 
+        public void RemoveUserFromStore()
+        {
+            Preferences.Remove(Constants.USER_PREFERENCES_KEY);
+        }
+
         public ServiceMan GetUser()
         {
             if(Preferences.ContainsKey(Constants.USER_PREFERENCES_KEY))

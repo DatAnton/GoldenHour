@@ -40,5 +40,18 @@ namespace GoldenHour.Maui.Services
                 return null;
             }
         }
+
+        public async Task UpdatePassword(ChangePasswordModel changePasswordModel)
+        {
+            try
+            {
+                var response = await PutWithHeadersAsync("/api/users/changePassword", changePasswordModel);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

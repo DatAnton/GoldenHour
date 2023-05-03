@@ -11,52 +11,53 @@
     </Shell.BackButtonBehavior>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}" IconImageSource="logout.png" />
+        <ToolbarItem x:Name="Setting" Clicked="Setting_Clicked" IconImageSource="gear.png" />
+        <ToolbarItem Command="{Binding LogoutCommand}" IconImageSource="logout.png" />
     </ContentPage.ToolbarItems>
 
-        <RefreshView Command="{Binding UpdateInfoCommand}" IsRefreshing="{Binding IsLoading}">
-            <ScrollView>
+    <RefreshView Command="{Binding UpdateInfoCommand}" IsRefreshing="{Binding IsLoading}" VerticalOptions="Center">
+        <ScrollView VerticalOptions="Center">
 
-                <VerticalStackLayout
-                    Spacing="20"
-                    Padding="30,0"
-                    VerticalOptions="Center">
+            <VerticalStackLayout
+                Spacing="20"
+                Padding="30,0"
+                VerticalOptions="Center">
 
-                    <Label Text="{Binding UserName}" 
-                       HorizontalOptions="Center" 
-                       FontSize="35" 
-                       TextDecorations="Underline" />
+                <Label Text="{Binding UserName}" 
+                    HorizontalOptions="Center" 
+                    FontSize="35" 
+                    TextDecorations="Underline" />
 
-                    <Image 
-                        HeightRequest="100"
-                        Source="user.png" 
-                        HorizontalOptions="Center" 
-                    />
+                <Image 
+                    HeightRequest="100"
+                    Source="user.png" 
+                    HorizontalOptions="Center" 
+                />
 
-                    <Frame BackgroundColor="AliceBlue" Padding="10">
-                        <Label Text="{Binding NickName}" FontSize="20" HorizontalOptions="Center" />
-                    </Frame>
+                <Frame BackgroundColor="AliceBlue" Padding="10">
+                    <Label Text="{Binding NickName}" FontSize="20" HorizontalOptions="Center" />
+                </Frame>
 
-                    <Frame BackgroundColor="AliceBlue" Padding="10">
-                        <Label Text="{Binding BloodGroupName}" FontSize="20" HorizontalOptions="Center" />
-                    </Frame>
+                <Frame BackgroundColor="AliceBlue" Padding="10">
+                    <Label Text="{Binding BloodGroupName}" FontSize="20" HorizontalOptions="Center" />
+                </Frame>
 
-                    <Frame BackgroundColor="AliceBlue" Padding="10">
-                        <Label Text="{Binding Brigade}" FontSize="20" HorizontalOptions="Center" />
-                    </Frame>
+                <Frame BackgroundColor="AliceBlue" Padding="10">
+                    <Label Text="{Binding Brigade}" FontSize="20" HorizontalOptions="Center" />
+                </Frame>
 
-                    <Frame BackgroundColor="AliceBlue" Padding="10">
-                        <Label Text="{Binding Role}" FontSize="20" HorizontalOptions="Center" />
-                    </Frame>
+                <Frame BackgroundColor="AliceBlue" Padding="10">
+                    <Label Text="{Binding Role}" FontSize="20" HorizontalOptions="Center" />
+                </Frame>
 
-                    <Frame BackgroundColor="{StaticResource Primary}" Padding="10">
-                        <ImageButton 
-                                Source="qr_code.png"
-                                HeightRequest="50" 
-                                Clicked="ShowQrBtn_Clicked"
-                                HorizontalOptions="Fill" 
-                            />
-                    </Frame>
+                <Frame BackgroundColor="{StaticResource Primary}" Padding="10">
+                    <ImageButton 
+                            Source="qr_code.png"
+                            HeightRequest="50" 
+                            Clicked="ShowQrBtn_Clicked"
+                            HorizontalOptions="Fill" 
+                        />
+                </Frame>
 
             </VerticalStackLayout>
             </ScrollView>
