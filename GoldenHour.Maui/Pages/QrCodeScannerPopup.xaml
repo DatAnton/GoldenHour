@@ -5,15 +5,32 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI"
              CanBeDismissedByTappingOutsideOfPopup="False">
-    <VerticalStackLayout>
+    <VerticalStackLayout BackgroundColor="Black">
 
         <zxing:CameraBarcodeReaderView 
-            BackgroundColor="White"
             x:Name="BarcodeReader"
-            HeightRequest="500"
-            IsDetecting="True" 
-            IsTorchOn="True" 
-            VerticalOptions="Center"
+            HeightRequest="350"
+            WidthRequest="350"
+            HorizontalOptions="Center"
             BarcodesDetected="BarcodeReader_BarcodesDetected" />
+
+        <Grid RowDefinitions="auto" ColumnDefinitions="*,*" Margin="10">
+            <Button Text="Close"
+                x:Name="CloseBtn"
+                Clicked="CloseBtn_Clicked"
+                FontSize="Large"
+                Margin="10, 0" 
+                Grid.Column="0"
+                HorizontalOptions="Fill" />
+
+            <Button Text="Me"
+                x:Name="MeBtm"
+                BackgroundColor="Gray"
+                Clicked="MeBtm_Clicked"
+                FontSize="Large"
+                Margin="10, 0"
+                Grid.Column="1"
+                HorizontalOptions="Fill" />
+        </Grid>
     </VerticalStackLayout>
 </mct:Popup>

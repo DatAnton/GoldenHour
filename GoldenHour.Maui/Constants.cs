@@ -13,5 +13,7 @@
 
         public const string MEDIC_ROLE_NAME = "Medic";
         public const string USER_PREFERENCES_KEY = "User";
+
+        public const int COORDINATES_ROUND_NUMBERS = 4;
     }
 }

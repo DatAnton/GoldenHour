@@ -2,9 +2,9 @@
 
 namespace GoldenHour.Maui.Helpers
 {
-    public static class TabsBuilder
+    public class TabsBuilder
     {
-        public static void BuildNavTabs()
+        public void BuildNavTabs()
         {
             Shell.Current.Items.Clear();
 

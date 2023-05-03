@@ -10,16 +10,19 @@ namespace GoldenHour.Maui.ViewModels
     {
         private readonly UserInfoHelper _userInfoHelper;
         private readonly QRCodeHelper _qrCodeHelper;
+        private readonly TabsBuilder _tabsBuilder;
         private readonly IUserService _userService;
 
         private readonly NetworkAccess _accessType = Connectivity.Current.NetworkAccess;
 
         public MainPageViewModel(UserInfoHelper userInfoHelper, 
-            QRCodeHelper qrCodeHelper, 
+            QRCodeHelper qrCodeHelper,
+            TabsBuilder tabsBuilder,
             IUserService userService)
         {
             _userInfoHelper = userInfoHelper;
             _qrCodeHelper = qrCodeHelper;
+            _tabsBuilder = tabsBuilder;
             _userService = userService;
         }
 
@@ -59,7 +62,7 @@ namespace GoldenHour.Maui.ViewModels
             SecureStorage.Remove(Constants.TOKEN_KEY_SECURE_STORAGE);
             _userInfoHelper.CleanUserInfo();
             _userInfoHelper.RemoveUserFromStore();
-            TabsBuilder.BuildNavTabs();
+            _tabsBuilder.BuildNavTabs();
         }
 
         [RelayCommand]

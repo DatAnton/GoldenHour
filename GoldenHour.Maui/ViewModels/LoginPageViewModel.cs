@@ -12,14 +12,17 @@ namespace GoldenHour.Maui.ViewModels
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
         private readonly UserInfoHelper _userInfoHelper;
+        private readonly TabsBuilder _tabsBuilder;
 
         public LoginPageViewModel(IAccountService accountService,
             IUserService userService,
-            UserInfoHelper userInfoHelper)
+            UserInfoHelper userInfoHelper,
+            TabsBuilder tabsBuilder)
         {
             _accountService = accountService;
             _userService = userService;
             _userInfoHelper = userInfoHelper;
+            _tabsBuilder = tabsBuilder;
         }
 
         [ObservableProperty]
@@ -56,7 +59,7 @@ namespace GoldenHour.Maui.ViewModels
 
                     _userInfoHelper.SaveUser(await _userService.GetInfoAsync());
 
-                    TabsBuilder.BuildNavTabs();
+                    _tabsBuilder.BuildNavTabs();
                     UserName = string.Empty;
                     Password = string.Empty;
                     await Shell.Current.GoToAsync($"{nameof(MainPage)}");

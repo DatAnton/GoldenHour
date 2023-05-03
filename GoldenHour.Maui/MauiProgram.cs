@@ -33,6 +33,8 @@ namespace GoldenHour.Maui
 
             builder.Services.AddSingleton<UserInfoHelper>();
             builder.Services.AddSingleton<QRCodeHelper>();
+            builder.Services.AddSingleton<TabsBuilder>();
+            builder.Services.AddSingleton<GeoHelper>();
 
             #endregion
 
@@ -49,7 +51,7 @@ namespace GoldenHour.Maui
             builder.Services.AddSingleton<LoadingPageViewModel>();
             builder.Services.AddSingleton<LoginPageViewModel>();
             builder.Services.AddSingleton<ChangePasswordViewModel>();
-            builder.Services.AddSingleton<NewIncidentPageViewModel>();
+            builder.Services.AddScoped<NewIncidentPageViewModel>();
 
             #endregion
 
@@ -58,7 +60,7 @@ namespace GoldenHour.Maui
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<LoadingPage>();
             builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddSingleton<NewIncidentPage>();
+            builder.Services.AddScoped<NewIncidentPage>();
             builder.Services.AddSingleton<HistoryPage>();
 
             #endregion
