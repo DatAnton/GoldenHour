@@ -25,11 +25,21 @@ namespace GoldenHour.Extensions
             return builder;
         }
 
+        public static WebApplicationBuilder AddHelpServices(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<FileHelper>();
+            builder.Services.AddScoped<TokenService>();
+
+            return builder;
+        }
+
         public static WebApplicationBuilder AddInfrastructureRepositories(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IBrigadesRepository, BrigadesRepository>();
             builder.Services.AddScoped<IBloodGroupsRepository, BloodGroupsRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IIncidentsRepository, IncidentsRepository>();
+            builder.Services.AddScoped<IHelpPhotosRepository, HelpPhotosRepository>();
 
             return builder;
         }
@@ -71,8 +81,6 @@ namespace GoldenHour.Extensions
                 .RequireAuthenticatedUser()
                 .Build();
             });
-
-            builder.Services.AddScoped<TokenService>();
 
             return builder;
         }

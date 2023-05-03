@@ -3,11 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GoldenHour.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class BloodGroupsController : BaseApiController
     {
-
         [HttpGet]
         public async Task<IActionResult> Get()
         {

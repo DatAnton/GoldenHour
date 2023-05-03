@@ -20,4 +20,8 @@
     <ProjectReference Include="..\GoldenHour.Application\GoldenHour.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

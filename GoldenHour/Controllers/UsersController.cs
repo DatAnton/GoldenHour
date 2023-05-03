@@ -6,8 +6,6 @@ using System.Security.Claims;
 
 namespace GoldenHour.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class UsersController : BaseApiController
     {
         [HttpGet]

@@ -37,7 +37,7 @@ namespace GoldenHour.Maui.ViewModels
         [ObservableProperty]
         string comment;
 
-        string UserId { get; set; }
+        string ServiceManId { get; set; }
         GeolocationData GeolocationData { get; set; }
 
         [RelayCommand]
@@ -78,7 +78,7 @@ namespace GoldenHour.Maui.ViewModels
                 CurrentTime = TimeSpan.Zero;
                 IsDateSetted = false;
                 Comment = string.Empty;
-                UserId = string.Empty;
+                ServiceManId = string.Empty;
                 GeolocationData = null;
             }
         }
@@ -108,7 +108,7 @@ namespace GoldenHour.Maui.ViewModels
 
         public void SetQrCodeResult(ScannerResult scannerResult)
         { 
-            UserId = scannerResult.UserId;
+            ServiceManId = scannerResult.UserId;
             NickName = scannerResult.NickName; 
         }
     }
