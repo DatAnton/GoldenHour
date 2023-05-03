@@ -49,6 +49,7 @@ namespace GoldenHour.Maui
             builder.Services.AddSingleton<LoadingPageViewModel>();
             builder.Services.AddSingleton<LoginPageViewModel>();
             builder.Services.AddSingleton<ChangePasswordViewModel>();
+            builder.Services.AddSingleton<NewIncidentPageViewModel>();
 
             #endregion
 

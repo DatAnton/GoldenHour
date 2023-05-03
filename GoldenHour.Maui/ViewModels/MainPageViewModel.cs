@@ -45,6 +45,11 @@ namespace GoldenHour.Maui.ViewModels
                 ("Confirmation", "Are you sure you want to log out?", "Yes", "No"))
             {
                 CleanAuthData();
+                UserName = string.Empty;
+                NickName = string.Empty;
+                BloodGroupName = string.Empty;
+                Brigade = string.Empty;
+                Role = string.Empty;
                 await Shell.Current.GoToAsync(nameof(LoginPage));
             }
         }
