@@ -17,6 +17,7 @@
         <Grid RowDefinitions="auto" ColumnDefinitions="*,*" Margin="10">
             <Button Text="Close"
                 x:Name="CloseBtn"
+                BackgroundColor="Gray"
                 Clicked="CloseBtn_Clicked"
                 FontSize="Large"
                 Margin="10, 0" 
@@ -25,7 +26,6 @@
 
             <Button Text="Me"
                 x:Name="MeBtm"
-                BackgroundColor="Gray"
                 Clicked="MeBtm_Clicked"
                 FontSize="Large"
                 Margin="10, 0"

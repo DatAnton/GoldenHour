@@ -3,6 +3,7 @@ using GoldenHour.Application.Core;
 using GoldenHour.Domain.Services;
 using GoldenHour.DTO.Incidents;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace GoldenHour.Application.Incidents
 {
@@ -40,7 +41,7 @@ namespace GoldenHour.Application.Incidents
                 await _incidentsRepository.Create(incident);
 
                 var createdFiles = await _fileHelper.SaveFiles(request.WebRootPath, 
-                    request.Incident.Photos, incident.Id);
+                    request.Incident.Files, incident.Id);
 
                 await _helpPhotosRepository.SavePhotoRange(
                     createdFiles.Select(file => new Domain.HelpPhoto

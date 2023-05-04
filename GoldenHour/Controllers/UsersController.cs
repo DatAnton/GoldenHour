@@ -17,14 +17,14 @@ namespace GoldenHour.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create(DTO.Users.ServiceMan user)
+        public async Task<IActionResult> Create(ServiceMan user)
         {
             return Ok(await Mediator.Send(new Create.Command { User = user }));
         }
 
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update(DTO.Users.ServiceMan user)
+        public async Task<IActionResult> Update(ServiceMan user)
         {
             return Ok(await Mediator.Send(new Update.Command { User = user }));
         }

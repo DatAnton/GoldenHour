@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GoldenHour.Maui.Helpers;
+using GoldenHour.Maui.Managers;
 using GoldenHour.Maui.Models;
 using System.Collections.ObjectModel;
 
@@ -9,9 +10,13 @@ namespace GoldenHour.Maui.ViewModels
     public partial class NewIncidentPageViewModel : BaseViewModel
     {
         private readonly GeoHelper _geoHelper;
-        public NewIncidentPageViewModel(GeoHelper geoHelper)
+        private readonly IncidentManager _incidentManager;
+
+        public NewIncidentPageViewModel(GeoHelper geoHelper, 
+            IncidentManager incidentManager)
         {
             _geoHelper = geoHelper;
+            _incidentManager = incidentManager;
         }
 
         [ObservableProperty]
@@ -37,8 +42,8 @@ namespace GoldenHour.Maui.ViewModels
         [ObservableProperty]
         string comment;
 
-        string ServiceManId { get; set; }
-        GeolocationData GeolocationData { get; set; }
+        string serviceManId { get; set; }
+        GeolocationData geolocationData { get; set; }
 
         [RelayCommand]
         public async void TakePhoto()
@@ -70,18 +75,32 @@ namespace GoldenHour.Maui.ViewModels
         {
             if(await Shell.Current.DisplayAlert("Confirmation", "Do you realy want to clear all?", "Yes", "No"))
             {
-                NickName = string.Empty;
-                Coordinates = string.Empty;
-                Photos.Clear();
-                IsAnyPhotos = false;
-                CurrentDate = DateTime.Today;
-                CurrentTime = TimeSpan.Zero;
-                IsDateSetted = false;
-                Comment = string.Empty;
-                ServiceManId = string.Empty;
-                GeolocationData = null;
+                ClearAllFields();
             }
         }
+
+        [RelayCommand]
+        async Task Send()
+        {
+            await _incidentManager.SaveIncident(serviceManId, Photos.Select(p => p.ImageUrl).ToList(),
+                geolocationData, CurrentDate, CurrentTime, Comment);
+            ClearAllFields();
+        }
+
+        private void ClearAllFields()
+        {
+            NickName = string.Empty;
+            Coordinates = string.Empty;
+            Photos.Clear();
+            IsAnyPhotos = false;
+            CurrentDate = DateTime.Today;
+            CurrentTime = TimeSpan.Zero;
+            IsDateSetted = false;
+            Comment = string.Empty;
+            serviceManId = string.Empty;
+            geolocationData = null;
+        }
+
         public async Task RemovePhoto(Photo photo)
         {
             if (await Shell.Current.DisplayAlert("Confirmation", "Do you realy want to this photo?", "Yes", "No"))
@@ -94,9 +113,9 @@ namespace GoldenHour.Maui.ViewModels
 
         public async Task SetCurrentLocation()
         {
-            GeolocationData = await _geoHelper.GetCurrentLocation();
-            Coordinates = $"{Math.Round(GeolocationData.Latitude, Constants.COORDINATES_ROUND_NUMBERS)}, " +
-                $"{Math.Round(GeolocationData.Longitude, Constants.COORDINATES_ROUND_NUMBERS)}";
+            geolocationData = await _geoHelper.GetCurrentLocation();
+            Coordinates = $"{Math.Round(geolocationData.Latitude, Constants.COORDINATES_ROUND_NUMBERS)}, " +
+                $"{Math.Round(geolocationData.Longitude, Constants.COORDINATES_ROUND_NUMBERS)}";
         }
 
         public void SetCurrentDateTime()
@@ -108,7 +127,7 @@ namespace GoldenHour.Maui.ViewModels
 
         public void SetQrCodeResult(ScannerResult scannerResult)
         { 
-            ServiceManId = scannerResult.UserId;
+            serviceManId = scannerResult.UserId;
             NickName = scannerResult.NickName; 
         }
     }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using GoldenHour.Maui.Helpers;
 using GoldenHour.Maui.Interfaces;
+using GoldenHour.Maui.Managers;
 using GoldenHour.Maui.Pages;
 using GoldenHour.Maui.Services;
 using GoldenHour.Maui.ViewModels;
@@ -42,6 +43,13 @@ namespace GoldenHour.Maui
 
             builder.Services.AddTransient<IAccountService, AccountService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IIncidentService, IncidentService>();
+
+            #endregion
+
+            #region Managers
+
+            builder.Services.AddScoped<IncidentManager>();
 
             #endregion
 

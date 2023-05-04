@@ -14,7 +14,7 @@ namespace GoldenHour.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] Incident incident)
+        public async Task<IActionResult> Create([FromForm]Incident incident)
         {
             return Ok(await Mediator.Send(new Create.Command 
                 { Incident = incident, WebRootPath = _webHostEnvironment.WebRootPath }));

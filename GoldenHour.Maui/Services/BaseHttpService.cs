@@ -21,6 +21,12 @@ namespace GoldenHour.Maui.Services
             return await _httpClient.GetAsync(url);
         }
 
+        protected async Task<HttpResponseMessage> PostWithHeadersAsync<T>(string url, T entity)
+        {
+            await SetAuthToken();
+            return await _httpClient.PostAsJsonAsync(url, entity);
+        }
+
         protected async Task<HttpResponseMessage> PutWithHeadersAsync<T>(string url, T entity)
         {
             await SetAuthToken();

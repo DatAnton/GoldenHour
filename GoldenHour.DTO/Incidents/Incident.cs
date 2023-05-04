@@ -10,6 +10,6 @@ namespace GoldenHour.DTO.Incidents
         public string Longitude { get; set; }
         public string Comment { get; set; }
         public string MedicId { get; set; }
-        public List<IFormFile> Photos { get; set; }
+        public List<IFormFile> Files { get; set; }
     }
 }
