@@ -2,6 +2,7 @@
 using GoldenHour.Domain.Services;
 using GoldenHour.DTO;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoldenHour.Application.Brigades
 {
@@ -24,7 +25,7 @@ namespace GoldenHour.Application.Brigades
             }
             public async Task<IList<BaseEntity>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return _mapper.Map<IList<BaseEntity>>((await _brigadesRepository.GetAll()).OrderBy(x => x.Name));
+                return _mapper.Map<IList<BaseEntity>>(await _brigadesRepository.GetAll().OrderBy(x => x.Name).ToListAsync());
             }
         }
     }

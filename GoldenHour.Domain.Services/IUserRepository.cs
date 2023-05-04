@@ -2,6 +2,6 @@
 {
     public interface IUserRepository
     {
-        Task<ServiceMan> GetFullServiceMan(string userName);
+        Task<ServiceMan> GetFullServiceManByUserName(string userName);
     }
 }

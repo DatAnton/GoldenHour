@@ -1,6 +1,7 @@
 ﻿using GoldenHour.Domain;
 using GoldenHour.Domain.Services;
 using GoldenHour.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoldenHour.Infrastructure.Repositories
 {
@@ -12,6 +13,11 @@ namespace GoldenHour.Infrastructure.Repositories
         {
             await _dataContext.HelpPhotos.AddRangeAsync(helpPhotos);     
             await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task<string> GetPathById(Guid id)
+        {
+            return (await _dataContext.HelpPhotos.FirstOrDefaultAsync(p => p.Id == id))?.Path ?? string.Empty;
         }
     }
 }

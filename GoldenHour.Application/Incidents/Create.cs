@@ -3,7 +3,6 @@ using GoldenHour.Application.Core;
 using GoldenHour.Domain.Services;
 using GoldenHour.DTO.Incidents;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace GoldenHour.Application.Incidents
 {
@@ -11,7 +10,7 @@ namespace GoldenHour.Application.Incidents
     {
         public class Command : IRequest
         {
-            public Incident Incident { get; set; }
+            public IncidentCreate Incident { get; set; }
             public string WebRootPath { get;set; }
         }
 

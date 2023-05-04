@@ -9,7 +9,7 @@ namespace GoldenHour.Infrastructure.Repositories
     {
         public UserRepository(DataContext dataContext) : base(dataContext) { }
 
-        public async Task<ServiceMan> GetFullServiceMan(string userName)
+        public async Task<ServiceMan> GetFullServiceManByUserName(string userName)
         {
             return await _dataContext.Users.Include(u => u.BloodGroup).Include(u => u.Brigade)
                 .FirstAsync(u => u.UserName == userName);

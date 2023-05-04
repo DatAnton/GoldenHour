@@ -9,12 +9,12 @@ namespace GoldenHour.Application.Users
 {
     public class List
     {
-        public class Query : IRequest<IList<ServiceMan>>
+        public class Query : IRequest<List<ServiceMan>>
         {
 
         }
 
-        public class Handler : IRequestHandler<Query, IList<ServiceMan>>
+        public class Handler : IRequestHandler<Query, List<ServiceMan>>
         {
             private readonly UserManager<Domain.ServiceMan> _userManager;
             private readonly RoleManager<IdentityRole> _roleManager;
@@ -29,7 +29,7 @@ namespace GoldenHour.Application.Users
                 _mapper = mapper;
             }
 
-            public async Task<IList<ServiceMan>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<ServiceMan>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var users = _userManager.Users;
                 var userRolesDictionary = new Dictionary<string, string>();

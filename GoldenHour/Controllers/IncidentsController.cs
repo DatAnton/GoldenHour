@@ -1,5 +1,6 @@
 ﻿using GoldenHour.Application.Incidents;
 using GoldenHour.DTO.Incidents;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoldenHour.Controllers
@@ -13,8 +14,23 @@ namespace GoldenHour.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [HttpGet]
+        [Authorize(Roles = Constants.ADMIN_ROLE)]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await Mediator.Send(new List.Query()));
+        }
+
+        [HttpGet("{photoId}")]
+        [Authorize(Roles = Constants.ADMIN_ROLE)]
+        public async Task<IActionResult> GetImage(Guid photoId)
+        {
+            return File(await Mediator.Send(new PhotoDetail.Query { Id = photoId }), "image/jpeg");
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm]Incident incident)
+        [Authorize(Roles = Constants.MEDIC_ROLE)]
+        public async Task<IActionResult> Create([FromForm]IncidentCreate incident)
         {
             return Ok(await Mediator.Send(new Create.Command 
                 { Incident = incident, WebRootPath = _webHostEnvironment.WebRootPath }));

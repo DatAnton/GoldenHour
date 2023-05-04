@@ -30,5 +30,10 @@ namespace GoldenHour.Application.Core
 
             return result;
         }
+
+        public async Task<byte[]> GetPhoto(string path)
+        {
+            return await File.ReadAllBytesAsync(path);
+        }
     }
 }

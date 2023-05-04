@@ -26,7 +26,7 @@ namespace GoldenHour.Application.Users
 
             public async Task<ServiceMan> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.GetFullServiceMan(request.UserName);
+                var user = await _userRepository.GetFullServiceManByUserName(request.UserName);
 
                 return _mapper.Map<ServiceMan>(user);
             }

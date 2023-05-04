@@ -1,6 +1,5 @@
 ﻿using GoldenHour.Domain.Services;
 using GoldenHour.Persistance;
-using Microsoft.EntityFrameworkCore;
 
 namespace GoldenHour.Infrastructure.Repositories
 {
@@ -19,9 +18,9 @@ namespace GoldenHour.Infrastructure.Repositories
             await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<List<T>> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return await _dataContext.Set<T>().ToListAsync();
+            return _dataContext.Set<T>();
         }
     }
 }

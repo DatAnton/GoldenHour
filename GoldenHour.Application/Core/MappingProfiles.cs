@@ -32,11 +32,14 @@ namespace GoldenHour.Application.Core
                     return dest;
                 });
 
-            CreateMap<DTO.Incidents.Incident, Domain.Incident>();
+            CreateMap<DTO.Incidents.IncidentCreate, Domain.Incident>();
 
             CreateMap<IdentityRole, BaseEntity>();
             CreateMap<Domain.BloodGroup, BaseEntity>();
             CreateMap<Domain.Brigade, BaseEntity>();
+
+            CreateMap<Domain.Incident, DTO.Incidents.Incident>()
+                .ForMember(x => x.MedicFullName, o => o.MapFrom(x => x.Medic.FullName));
         }
     }
 }

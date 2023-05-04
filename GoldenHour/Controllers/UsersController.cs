@@ -9,28 +9,28 @@ namespace GoldenHour.Controllers
     public class UsersController : BaseApiController
     {
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Constants.ADMIN_ROLE)]
         public async Task<IActionResult> Get()
         {
             return Ok(await Mediator.Send(new List.Query()));
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Constants.ADMIN_ROLE)]
         public async Task<IActionResult> Create(ServiceMan user)
         {
             return Ok(await Mediator.Send(new Create.Command { User = user }));
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Constants.ADMIN_ROLE)]
         public async Task<IActionResult> Update(ServiceMan user)
         {
             return Ok(await Mediator.Send(new Update.Command { User = user }));
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Constants.ADMIN_ROLE)]
         public async Task<IActionResult> Delete(string id)
         {
             return Ok(await Mediator.Send(new Delete.Command { Id = id }));

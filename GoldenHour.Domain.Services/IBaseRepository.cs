@@ -2,7 +2,7 @@
 {
     public interface IBaseRepository<T> where T : class
     {
-        Task<List<T>> GetAll();
+        IQueryable<T> GetAll();
         Task Create(T entity);
     }
 }
