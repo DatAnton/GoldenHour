@@ -4,6 +4,7 @@ import UserStore from "./userStore";
 import RoleStore from "./roleStore";
 import BloodGroupStore from "./bloodGroupStore";
 import BrigadeStore from "./brigadeStore";
+import IncidentStore from "./incidentStore";
 
 interface Store {
     accountStore: AccountStore;
@@ -11,6 +12,7 @@ interface Store {
     roleStore: RoleStore;
     bloodGroupStore: BloodGroupStore;
     brigadeStore: BrigadeStore;
+    incidentStore: IncidentStore;
 }
 
 export const store: Store = {
@@ -18,7 +20,8 @@ export const store: Store = {
     userStore: new UserStore(),
     roleStore: new RoleStore(),
     bloodGroupStore: new BloodGroupStore(),
-    brigadeStore: new BrigadeStore()
+    brigadeStore: new BrigadeStore(),
+    incidentStore: new IncidentStore()
 };
 
 export const StoreContext = createContext(store);

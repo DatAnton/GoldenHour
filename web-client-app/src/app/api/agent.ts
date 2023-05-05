@@ -4,6 +4,7 @@ import { store } from "../stores/store";
 import { ServiceMan } from "../models/serviceMan";
 import { BaseEntity } from "../models/baseEntity";
 import { ChangePasswordData } from "../models/changePasswordData";
+import Incident from "../models/incident";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -54,12 +55,17 @@ const Brigades = {
     getBrigades: () => requests.get<BaseEntity[]>("/brigades"),
 };
 
+const Incidents = {
+    getIncidents: () => requests.get<Incident[]>("/incidents")
+};
+
 const agent = {
     Account,
     Users,
     Roles,
     BloodGroups,
     Brigades,
+    Incidents
 };
 
 export default agent;

@@ -15,7 +15,14 @@ export default observer(function NavBar() {
                     Golden Hour
                 </Menu.Item>
                 {isAdmin ? (
-                    <Menu.Item as={NavLink} to="/users" name="Users" />
+                    <>
+                        <Menu.Item as={NavLink} to="/users" name="Users" />
+                        <Menu.Item
+                            as={NavLink}
+                            to="/incidents"
+                            name="Incidents"
+                        />
+                    </>
                 ) : null}
                 <Menu.Item position="right">
                     <Image src="assets/user.png" avatar spaced="right" />
