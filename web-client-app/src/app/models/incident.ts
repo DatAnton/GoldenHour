@@ -1,6 +1,7 @@
 import { ServiceMan } from "./serviceMan";
 
 export default interface Incident {
+    id: string;
     serviceManId: string;
     serviceMan: ServiceMan;
     dateTime: string;

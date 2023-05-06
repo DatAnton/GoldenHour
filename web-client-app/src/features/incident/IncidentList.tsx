@@ -9,6 +9,9 @@ export default observer(function IncidentList() {
     const { incidents } = incidentStore;
     const [incidentPhotosModalOpen, setIncidentPhotosModalOpen] =
         useState(false);
+    const [selectedIncident, setSelectedIncident] = useState<
+        string | undefined
+    >(undefined);
 
     useEffect(() => {
         incidentStore.getIncidents();
@@ -19,17 +22,20 @@ export default observer(function IncidentList() {
             <IncidentPhotosModal
                 isOpen={incidentPhotosModalOpen}
                 onClose={() => setIncidentPhotosModalOpen(false)}
+                incidentId={selectedIncident}
             />
             <Card.Group itemsPerRow={3}>
                 {incidents.map((incident) => (
-                    <Card>
+                    <Card key={incident.id}>
                         <Card.Content header={incident.serviceMan.fullName} />
                         <Card.Content meta={incident.serviceMan.nickName} />
                         <Card.Content description={incident.dateTime} />
                         <Card.Content
                             description={`${incident.latitude} ${incident.longitude}`}
                         />
-                        <Card.Content description={incident.comment} />
+                        {incident.comment && incident.comment !== "" ? (
+                            <Card.Content description={incident.comment} />                        ) : null}
+
                         <Card.Content extra>
                             <Icon name="doctor" />
                             {incident.medicFullName}
@@ -37,7 +43,10 @@ export default observer(function IncidentList() {
                         <Card.Content textAlign="right" extra>
                             <Button
                                 primary
-                                onClick={() => setIncidentPhotosModalOpen(true)}
+                                onClick={() => {
+                                    setSelectedIncident(incident.id);
+                                    setIncidentPhotosModalOpen(true);
+                                }}
                             >
                                 Photos
                             </Button>

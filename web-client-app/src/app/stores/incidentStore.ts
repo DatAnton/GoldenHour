@@ -19,4 +19,8 @@ export default class IncidentStore {
             throw error;
         }
     };
+
+    findIncident = (id: string): Incident | undefined => {
+        return this.incidents.find(i => i.id === id);
+    }
 }

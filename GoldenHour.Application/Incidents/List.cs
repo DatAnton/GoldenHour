@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GoldenHour.Application.Core;
 using GoldenHour.Domain.Services;
 using GoldenHour.DTO.Incidents;
 using MediatR;
@@ -16,11 +17,13 @@ namespace GoldenHour.Application.Incidents
         public class Handler : IRequestHandler<Query, List<Incident>>
         {
             private readonly IIncidentsRepository _incidentsRepository;
+            private readonly FileHelper _fileHelper;
             private readonly IMapper _mapper;
 
-            public Handler(IIncidentsRepository incidentsRepository, IMapper mapper)
+            public Handler(IIncidentsRepository incidentsRepository, FileHelper fileHelper, IMapper mapper)
             {
                 _incidentsRepository = incidentsRepository;
+                _fileHelper = fileHelper;
                 _mapper = mapper;
             }
             public async Task<List<Incident>> Handle(Query request, CancellationToken cancellationToken)
@@ -36,7 +39,11 @@ namespace GoldenHour.Application.Incidents
                 {
                     var dto = _mapper.Map<Incident>(incident);
                     dto.ServiceMan = _mapper.Map<DTO.Users.ServiceMan>(incident.ServiceMan);
-                    dto.Images = incident.HelpPhotos.Select(p => p.Id).ToList();
+                    dto.Images = new List<string>();
+                    foreach(var photo in incident.HelpPhotos)
+                    {
+                        dto.Images.Add(await _fileHelper.GetPhoto(photo.Path));
+                    }
                     resultDTOs.Add(dto);
                 }
 

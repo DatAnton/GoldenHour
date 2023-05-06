@@ -21,13 +21,6 @@ namespace GoldenHour.Controllers
             return Ok(await Mediator.Send(new List.Query()));
         }
 
-        [HttpGet("{photoId}")]
-        [Authorize(Roles = Constants.ADMIN_ROLE)]
-        public async Task<IActionResult> GetImage(Guid photoId)
-        {
-            return File(await Mediator.Send(new PhotoDetail.Query { Id = photoId }), "image/jpeg");
-        }
-
         [HttpPost]
         [Authorize(Roles = Constants.MEDIC_ROLE)]
         public async Task<IActionResult> Create([FromForm]IncidentCreate incident)
