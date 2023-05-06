@@ -28,7 +28,7 @@ public partial class NewIncidentPage : ContentPage
             await Shell.Current.DisplayAlert("Info", $"Detected succesfully \"{scannerResult.NickName}\"", "Ok");
             _viewModel.SetQrCodeResult(scannerResult);
             _viewModel.SetCurrentDateTime();
-            await _viewModel.SetCurrentLocation();
+            Task.Run(() => _viewModel.SetCurrentLocation());
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GoldenHour.Maui.Domain;
 using GoldenHour.Maui.Helpers;
 using GoldenHour.Maui.Managers;
 using GoldenHour.Maui.Models;
@@ -20,15 +21,18 @@ namespace GoldenHour.Maui.ViewModels
         }
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsOkToSave))]
         string nickName;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsOkToSave))]
         string coordinates;
 
-        public ObservableCollection<Photo> Photos { get; private set; } = new ObservableCollection<Photo>();
+        public ObservableCollection<Models.Photo> Photos { get; private set; } = new ObservableCollection<Models.Photo>();
 
         [ObservableProperty]
-        bool isAnyPhotos;
+        [NotifyPropertyChangedFor(nameof(IsOkToSave))]
+        bool isAnyPhotos = false;
 
         [ObservableProperty]
         DateTime currentDate;
@@ -37,10 +41,13 @@ namespace GoldenHour.Maui.ViewModels
         TimeSpan currentTime;
 
         [ObservableProperty]
-        bool isDateSetted;
+        [NotifyPropertyChangedFor(nameof(IsOkToSave))]
+        bool isDateSetted = false;
 
         [ObservableProperty]
-        string comment;
+        string comment = "";
+
+        public bool IsOkToSave => !string.IsNullOrEmpty(NickName) && IsAnyPhotos && IsDateSetted && !string.IsNullOrEmpty(Coordinates);
 
         string serviceManId { get; set; }
         GeolocationData geolocationData { get; set; }
@@ -61,7 +68,7 @@ namespace GoldenHour.Maui.ViewModels
 
                     await sourceStream.CopyToAsync(localFileStream);
 
-                    Photos.Add(new Photo
+                    Photos.Add(new Models.Photo
                     {
                         ImageUrl = localFilePath
                     });
@@ -82,8 +89,19 @@ namespace GoldenHour.Maui.ViewModels
         [RelayCommand]
         async Task Send()
         {
-            await _incidentManager.SaveIncident(serviceManId, Photos.Select(p => p.ImageUrl).ToList(),
-                geolocationData, CurrentDate, CurrentTime, Comment);
+            var dateTime = new DateTime(CurrentDate.Year, CurrentDate.Month, CurrentDate.Day,
+                CurrentTime.Hours, CurrentTime.Minutes, CurrentTime.Seconds);
+            var dbIncident = new Incident
+            {
+                Comment = string.IsNullOrWhiteSpace(Comment) ? "" : Comment,
+                DateTime = dateTime,
+                Latitude = geolocationData.Latitude,
+                Longitude = geolocationData.Longitude,
+                MedicId = App.UserInfo.UserId,
+                ServiceManId = serviceManId,
+                ServiceManNickName = NickName
+            };
+            Task.Run(() => _incidentManager.SaveIncident(dbIncident, Photos.Select(p => p.ImageUrl).ToList()));
             ClearAllFields();
         }
 
@@ -101,13 +119,15 @@ namespace GoldenHour.Maui.ViewModels
             geolocationData = null;
         }
 
-        public async Task RemovePhoto(Photo photo)
+        public async Task RemovePhoto(Models.Photo photo)
         {
             if (await Shell.Current.DisplayAlert("Confirmation", "Do you realy want to this photo?", "Yes", "No"))
             {
                 Photos.Remove(photo);
                 if(!Photos.Any())
+                {
                     IsAnyPhotos = false;
+                }
             }
         }
 

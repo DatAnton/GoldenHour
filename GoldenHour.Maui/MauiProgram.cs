@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using GoldenHour.Maui.DbServices;
 using GoldenHour.Maui.Helpers;
 using GoldenHour.Maui.Interfaces;
 using GoldenHour.Maui.Managers;
@@ -30,6 +31,10 @@ namespace GoldenHour.Maui
                     h.AddHandler(typeof(ZXing.Net.Maui.Controls.BarcodeGeneratorView), typeof(BarcodeGeneratorViewHandler));
                 });
 
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "goldenHour.db3");
+
+            builder.Services.AddSingleton(s => ActivatorUtilities.CreateInstance<DatabaseService>(s, dbPath));
+
             #region Helpers
 
             builder.Services.AddSingleton<UserInfoHelper>();
@@ -60,6 +65,7 @@ namespace GoldenHour.Maui
             builder.Services.AddSingleton<LoginPageViewModel>();
             builder.Services.AddSingleton<ChangePasswordViewModel>();
             builder.Services.AddScoped<NewIncidentPageViewModel>();
+            builder.Services.AddScoped<HistoryViewModel>();
 
             #endregion
 

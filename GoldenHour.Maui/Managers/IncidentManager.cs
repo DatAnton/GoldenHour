@@ -1,5 +1,5 @@
-﻿using GoldenHour.Maui.Interfaces;
-using GoldenHour.Maui.Models;
+﻿using GoldenHour.Maui.Domain;
+using GoldenHour.Maui.Interfaces;
 using RestSharp;
 
 namespace GoldenHour.Maui.Managers
@@ -13,27 +13,47 @@ namespace GoldenHour.Maui.Managers
             _incidentService = incidentService;
         }
 
-        public async Task SaveIncident(string serviceManId, List<string> photos,
-            GeolocationData geolocationData, DateTime currentDate, TimeSpan currentTime,
-            string comment)
+        public async Task SaveIncident(Incident incident, List<string> photos)
         {
-            var dateTime = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day,
-                currentTime.Hours, currentTime.Minutes, currentTime.Seconds);
-
             var request = new RestRequest("/api/Incidents")
-                .AddParameter("ServiceManId", serviceManId)
-                .AddParameter("MedicId", App.UserInfo.UserId)
-                .AddParameter("Comment", comment)
-                .AddParameter("Latitude", geolocationData.Latitude.ToString())
-                .AddParameter("Longitude", geolocationData.Longitude.ToString())
-                .AddParameter("DateTime", dateTime.ToString());
+                .AddParameter("ServiceManId", incident.ServiceManId)
+                .AddParameter("MedicId", incident.MedicId)
+                .AddParameter("Comment", incident.Comment)
+                .AddParameter("Latitude", incident.Latitude.ToString())
+                .AddParameter("Longitude", incident.Longitude.ToString())
+                .AddParameter("DateTime", incident.DateTime.ToString());
 
             foreach(var photo in photos)
             {
                 request.AddFile("Files", photo);
             }
 
-            await _incidentService.SaveIncident(request);
+            if(incident.Id == 0)
+            {
+                incident.IsSuccessfull = false;
+                SaveIncidentToDb(incident, photos);
+            }
+
+            var requestSuccess = await _incidentService.SaveIncident(request);
+            if(requestSuccess)
+            {
+                App.DbService.SetSuccessRequest(incident.Id, true);
+            }    
+        }
+
+        public async Task SendAllUnsuccessfullIncidents(List<Incident> incidents)
+        {
+            foreach(var incident in incidents)
+            {
+                var photos = App.DbService.GetPhotos(incident.Id);
+                await SaveIncident(incident, photos.Select(p => p.Path).ToList());
+            }
+        }
+
+        private void SaveIncidentToDb(Incident incident, List<string> photos)
+        {
+            App.DbService.AddIncident(incident, 
+                photos.Select(p => new Domain.Photo { Path = p}).ToList());
         }
     }
 }

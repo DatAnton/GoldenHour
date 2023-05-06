@@ -85,7 +85,7 @@
 
             <Button Text="Send" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" 
                     Margin="0, 10" FontSize="Large" HorizontalOptions="Fill" 
-                    Command="{Binding SendCommand}" />
+                    Command="{Binding SendCommand}" IsEnabled="{Binding IsOkToSave}" />
         </Grid>
         
     </ScrollView>
