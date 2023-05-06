@@ -34,7 +34,8 @@ export default observer(function IncidentList() {
                             description={`${incident.latitude} ${incident.longitude}`}
                         />
                         {incident.comment && incident.comment !== "" ? (
-                            <Card.Content description={incident.comment} />) : null}
+                            <Card.Content description={incident.comment} />
+                        ) : null}
                         <Card.Content extra>
                             <Icon name="doctor" />
                             {incident.medicFullName}
