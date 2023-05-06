@@ -41,6 +41,8 @@ const Users = {
     getUserInfo: () => requests.get<ServiceMan>("/users/getInfo"),
     changePassword: (data: ChangePasswordData) =>
         requests.put("/users/changePassword", data),
+    importUsersFile: (data: FormData) =>
+        requests.post<number>("/users/import", data),
 };
 
 const Roles = {
@@ -56,7 +58,7 @@ const Brigades = {
 };
 
 const Incidents = {
-    getIncidents: () => requests.get<Incident[]>("/incidents")
+    getIncidents: () => requests.get<Incident[]>("/incidents"),
 };
 
 const agent = {
@@ -65,7 +67,7 @@ const agent = {
     Roles,
     BloodGroups,
     Brigades,
-    Incidents
+    Incidents,
 };
 
 export default agent;

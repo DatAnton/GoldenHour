@@ -29,6 +29,7 @@ namespace GoldenHour.Extensions
         {
             builder.Services.AddScoped<FileHelper>();
             builder.Services.AddScoped<TokenService>();
+            builder.Services.AddScoped<CsvService>();
 
             return builder;
         }

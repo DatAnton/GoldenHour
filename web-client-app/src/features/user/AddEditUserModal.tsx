@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Button, DropdownProps, Form, Modal } from "semantic-ui-react";
+import { Button, DropdownProps, Form, Message, Modal } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { ServiceMan } from "../../app/models/serviceMan";
@@ -28,18 +28,20 @@ export default observer(function AddEditUserModal(props: AddUserModalProps) {
     };
 
     const { roleStore, bloodGroupStore, brigadeStore, userStore } = useStore();
-    const { users } = userStore;
+    const { users, loading, importUsersResult } = userStore;
     const { roles } = roleStore;
     const { bloodGroups } = bloodGroupStore;
     const { brigades } = brigadeStore;
 
     const [user, setUser] = useState<ServiceMan>(getUserTemplate());
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     useEffect(() => {
+        userStore.resetImportUsersResult();
         roleStore.getRoles();
         bloodGroupStore.getBloodGroups();
         brigadeStore.getBrigades();
-    }, [roleStore, bloodGroupStore, brigadeStore]);
+    }, [userStore, roleStore, bloodGroupStore, brigadeStore]);
 
     useEffect(() => {
         if (props.isOpen) {
@@ -91,20 +93,38 @@ export default observer(function AddEditUserModal(props: AddUserModalProps) {
 
     const saveOk = () => {
         return (
-            user.userName !== "" &&
-            user.nickName !== "" &&
-            user.email !== "" &&
-            user.bloodGroupId !== "" &&
-            user.brigadeId !== "" &&
-            user.roleId !== ""
+            (user.userName !== "" &&
+                user.nickName !== "" &&
+                user.email !== "" &&
+                user.bloodGroupId !== "" &&
+                user.brigadeId !== "" &&
+                user.roleId !== "") ||
+            selectedFile !== null
         );
     };
 
-    const onSave = () => {
-        if (user.id !== "")
-            userStore.updateUser(user).then(() => userStore.getUsers());
-        else userStore.createUser(user).then(() => userStore.getUsers());
+    const onClose = () => {
+        setSelectedFile(null);
+        userStore.resetImportUsersResult();
         props.onClose();
+    }
+
+    const onSave = () => {
+        if (selectedFile !== null) {
+            const data = new FormData();
+            data.append("file", selectedFile);
+            userStore.importUsers(data).then(() => userStore.getUsers());
+            setSelectedFile(null);
+        } else if (user.id !== "")
+        {
+            userStore.updateUser(user).then(() => userStore.getUsers());
+            onClose();
+        }
+        else 
+        {
+            userStore.createUser(user).then(() => userStore.getUsers());
+            onClose();
+        }
     };
 
     return (
@@ -180,10 +200,35 @@ export default observer(function AddEditUserModal(props: AddUserModalProps) {
                         />
                     </Form.Group>
                 </Form>
+                <hr />
+                <Form loading={loading}>
+                    {importUsersResult ? (
+                        <Message>
+                            <Message.Header>Import result</Message.Header>
+                            <p>
+                                {importUsersResult} users was imported
+                            </p>
+                        </Message>
+                    ) : null}
+                    <Form.Input
+                        type="file"
+                        onChange={(e) =>
+                            setSelectedFile(
+                                e.target?.files ? e.target.files[0] : null
+                            )
+                        }
+                        label="Import users"
+                    />
+                </Form>
             </Modal.Content>
             <Modal.Actions>
-                <Button onClick={() => props.onClose()}>Cancel</Button>
-                <Button positive onClick={() => onSave()} disabled={!saveOk()}>
+                <Button onClick={() => onClose()}>Cancel</Button>
+                <Button
+                    positive
+                    onClick={() => onSave()}
+                    disabled={!saveOk()}
+                    loading={loading}
+                >
                     {props.userId ? "Edit" : "Create"}
                 </Button>
             </Modal.Actions>

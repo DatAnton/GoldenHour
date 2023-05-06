@@ -6,6 +6,8 @@ import { ChangePasswordData } from "../models/changePasswordData";
 export default class UserStore {
     users: ServiceMan[] = [];
     userInfo: ServiceMan | undefined = undefined;
+    importUsersResult: number | undefined = undefined;
+    loading: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -25,6 +27,19 @@ export default class UserStore {
     createUser = async (user: ServiceMan) => {
         try {
             await agent.Users.createUser(user);
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    importUsers = async (data: FormData) => {
+        try {
+            this.loading = true;
+            var response = await agent.Users.importUsersFile(data);
+            runInAction(() => {
+                this.importUsersResult = response;
+                this.loading = false;
+            });
         } catch (error) {
             throw error;
         }
@@ -63,5 +78,9 @@ export default class UserStore {
         } catch (error) {
             throw error;
         }
+    };
+
+    resetImportUsersResult = () => {
+        this.importUsersResult = undefined;
     }
 }

@@ -22,6 +22,13 @@ namespace GoldenHour.Controllers
             return Ok(await Mediator.Send(new Create.Command { User = user }));
         }
 
+        [HttpPost("import")]
+        [Authorize(Roles = Constants.ADMIN_ROLE)]
+        public async Task<IActionResult> Import(IFormFile file)
+        {
+            return Ok(await Mediator.Send(new Import.Command { File = file }));
+        }
+
         [HttpPut]
         [Authorize(Roles = Constants.ADMIN_ROLE)]
         public async Task<IActionResult> Update(ServiceMan user)

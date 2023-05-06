@@ -2,6 +2,6 @@
 {
     public interface IBrigadesRepository : IBaseRepository<Brigade>
     {
-
+        Task<Brigade?> GetByShortName(string shortName);
     }
 }
