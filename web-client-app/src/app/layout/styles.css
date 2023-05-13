@@ -35,3 +35,12 @@ body
   font-weight: normal;
 }
 
+.AppMap {
+  height: 500px;
+  width: auto;
+}
+
+.map-container {
+  height: 100%;
+  width: 100%;
+}

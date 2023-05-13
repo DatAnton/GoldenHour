@@ -3,12 +3,14 @@ import { Button, Card, Container, Icon } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { useEffect, useState } from "react";
 import IncidentPhotosModal from "./IncidentPhotosModal";
+import IncidentMap from "./IncidentMap";
 
 export default observer(function IncidentList() {
     const { incidentStore } = useStore();
     const { incidents } = incidentStore;
     const [incidentPhotosModalOpen, setIncidentPhotosModalOpen] =
         useState(false);
+    const [mapModalOpen, setMapModalOpen] = useState(false);
     const [selectedIncident, setSelectedIncident] = useState<
         string | undefined
     >(undefined);
@@ -22,6 +24,12 @@ export default observer(function IncidentList() {
             <IncidentPhotosModal
                 isOpen={incidentPhotosModalOpen}
                 onClose={() => setIncidentPhotosModalOpen(false)}
+                incidentId={selectedIncident}
+            />
+
+            <IncidentMap
+                isOpen={mapModalOpen}
+                onClose={() => setMapModalOpen(false)}
                 incidentId={selectedIncident}
             />
             <Card.Group itemsPerRow={3}>
@@ -42,14 +50,21 @@ export default observer(function IncidentList() {
                         </Card.Content>
                         <Card.Content textAlign="right" extra>
                             <Button
+                                positive
+                                onClick={() => {
+                                    setSelectedIncident(incident.id);
+                                    setMapModalOpen(true);
+                                }}
+                                icon="map pin"
+                            />
+                            <Button
+                                icon="picture"
                                 primary
                                 onClick={() => {
                                     setSelectedIncident(incident.id);
                                     setIncidentPhotosModalOpen(true);
                                 }}
-                            >
-                                Photos
-                            </Button>
+                            />
                         </Card.Content>
                     </Card>
                 ))}
