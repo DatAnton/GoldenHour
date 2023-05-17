@@ -1,4 +1,5 @@
 using GoldenHour.Extensions;
+using GoldenHour.Middleware;
 using Microsoft.OpenApi.Models;
 
 namespace GoldenHour
@@ -46,6 +47,7 @@ namespace GoldenHour
             builder.AddAdditionalServices();
 
             var app = builder.Build();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI();

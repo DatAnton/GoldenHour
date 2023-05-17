@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 import { ServiceMan } from "../models/serviceMan";
@@ -8,8 +8,6 @@ import Incident from "../models/incident";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-const responseBody = <T>(response: AxiosResponse<T>) => response.data;
-
 axios.interceptors.request.use((config) => {
     const token = store.accountStore.token;
     if (token && config.headers)
@@ -17,6 +15,28 @@ axios.interceptors.request.use((config) => {
 
     return config;
 });
+
+axios.interceptors.response.use(
+    async (response) => {
+        return response;
+    },
+    (error: AxiosError) => {
+        const { data, status } = error.response!;
+        switch (status) {
+            case 401:
+                window.alert("unauthorized");
+                break;
+            case 403:
+                window.alert("forbidden");
+                break;
+            case 500:
+                window.alert((data as { message: string }).message);
+                break;
+        }
+    }
+);
+
+const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
