@@ -41,6 +41,7 @@ namespace GoldenHour.Extensions
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IIncidentsRepository, IncidentsRepository>();
             builder.Services.AddScoped<IHelpPhotosRepository, HelpPhotosRepository>();
+            builder.Services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
 
             return builder;
         }

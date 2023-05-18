@@ -1,8 +1,10 @@
 ﻿using GoldenHour.Domain;
+using GoldenHour.Domain.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace GoldenHour.Services
@@ -11,12 +13,15 @@ namespace GoldenHour.Services
     {
         private readonly IConfiguration _config;
         private readonly UserManager<ServiceMan> _userManager;
+        private readonly IUserRefreshTokenRepository _userRefreshTokenRepository;
 
         public TokenService(IConfiguration config, 
-            UserManager<ServiceMan> userManager)
+            UserManager<ServiceMan> userManager,
+            IUserRefreshTokenRepository userRefreshTokenRepository)
         {
             _config = config;
             _userManager = userManager;
+            _userRefreshTokenRepository = userRefreshTokenRepository;
         }
 
 
@@ -46,6 +51,29 @@ namespace GoldenHour.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
+        }
+
+        public async Task<string> GenerateRefreshToken(string userId)
+        {
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            var refreshToken =  Convert.ToBase64String(randomNumber);
+
+            await _userRefreshTokenRepository.SetRefreshToken(userId, refreshToken, 
+                DateTime.UtcNow.AddMinutes(Convert.ToInt32(_config["JwtSettings:RefreshDurationInMin"])));
+
+            return refreshToken;
+        }
+
+        public string? GetUserIdFromToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler().ReadJwtToken(token);
+
+            var userId = tokenHandler.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+            return userId?.Value;
+
         }
     }
 }

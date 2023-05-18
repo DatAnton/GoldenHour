@@ -1,4 +1,5 @@
 ﻿using GoldenHour.Domain;
+using GoldenHour.Domain.Services;
 using GoldenHour.DTO.Accounts;
 using GoldenHour.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,12 +17,15 @@ namespace GoldenHour.Controllers
     {
         private readonly UserManager<ServiceMan> _userManager;
         private readonly TokenService _tokenService;
+        private readonly IUserRefreshTokenRepository _userRefreshTokenRepository;
 
         public AccountsController(UserManager<ServiceMan> userManager, 
-            TokenService tokenService)
+            TokenService tokenService,
+            IUserRefreshTokenRepository userRefreshTokenRepository)
         {
             _userManager = userManager;
             _tokenService = tokenService;
+            _userRefreshTokenRepository = userRefreshTokenRepository;
         }
 
         [HttpPost("login")]
@@ -34,7 +38,23 @@ namespace GoldenHour.Controllers
 
             var isValidPassword = await _userManager.CheckPasswordAsync(user, login.Password);
 
-            return isValidPassword ? Ok(await CreateUserObject(user)) : Unauthorized();
+            return isValidPassword ? Ok(await CreateTokensObject(user)) : Unauthorized();
+        }
+
+        [HttpPost("refresh")]
+        public async Task<ActionResult<LoginResponse>> Refresh(Refresh refresh)
+        {
+            var userId = _tokenService.GetUserIdFromToken(refresh.AccessToken);
+            if(!string.IsNullOrEmpty(userId))
+            {
+                var userRefreshTokenObject = await _userRefreshTokenRepository.GetRefreshTokenByUserId(userId);
+                if(userRefreshTokenObject!.RefreshToken == refresh.RefreshToken && userRefreshTokenObject.Expire > DateTime.UtcNow)
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    return Ok(await CreateTokensObject(user));
+                }
+            }
+            throw new Exception("Invalid refresh token");    
         }
 
         [Authorize]
@@ -51,13 +71,15 @@ namespace GoldenHour.Controllers
         }
 
 
-        private async Task<LoginResponse> CreateUserObject(ServiceMan user)
+        private async Task<LoginResponse> CreateTokensObject(ServiceMan user)
         {
+            var refreshToken = await _tokenService.GenerateRefreshToken(user.Id);
             return new LoginResponse
             {
                 Token = await _tokenService.GenerateToken(user),
                 UserId = user.Id,
-                UserName = user.UserName
+                UserName = user.UserName,
+                RefreshToken = refreshToken
             };
         }
 
