@@ -7,7 +7,7 @@ namespace GoldenHour.DTO.Incidents
         public Guid Id { get; set; }
         public string ServiceManId { get; set; }
         public ServiceMan ServiceMan { get; set; }
-        public DateTime DateTime { get; set; }
+        public string DateTime { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string Comment { get; set; }

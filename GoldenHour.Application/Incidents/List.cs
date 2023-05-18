@@ -28,7 +28,7 @@ namespace GoldenHour.Application.Incidents
             }
             public async Task<List<Incident>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var incidents = await _incidentsRepository.GetAll()
+                var incidents = await _incidentsRepository.GetAll().OrderByDescending(i => i.DateTime)
                     .Include(i => i.Medic).Include(i => i.ServiceMan.BloodGroup).Include(i => i.ServiceMan.Brigade)
                     .Include(i => i.HelpPhotos)
                     .ToListAsync();

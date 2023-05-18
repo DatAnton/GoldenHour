@@ -38,12 +38,31 @@ export default observer(function IncidentList() {
                     <Card key={incident.id}>
                         <Card.Content header={incident.serviceMan.fullName} />
                         <Card.Content meta={incident.serviceMan.nickName} />
-                        <Card.Content description={incident.dateTime} />
                         <Card.Content
-                            description={`${incident.latitude} ${incident.longitude}`}
+                            description={
+                                <>
+                                    <Icon name="calendar alternate outline" />
+                                    {incident.dateTime}
+                                </>
+                            }
+                        />
+                        <Card.Content
+                            description={
+                                <>
+                                    <Icon name="map marker alternate" />
+                                    {incident.latitude} {incident.longitude}
+                                </>
+                            }
                         />
                         {incident.comment && incident.comment !== "" ? (
-                            <Card.Content description={incident.comment} />
+                            <Card.Content
+                                description={
+                                    <>
+                                        <Icon name="comment" />
+                                        {incident.comment}
+                                    </>
+                                }
+                            />
                         ) : null}
                         <Card.Content extra>
                             <Icon name="doctor" />
@@ -56,7 +75,7 @@ export default observer(function IncidentList() {
                                     setSelectedIncident(incident.id);
                                     setMapModalOpen(true);
                                 }}
-                                icon="map pin"
+                                icon="map marker alternate"
                             />
                             <Button
                                 icon="picture"

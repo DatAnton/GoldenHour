@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GoldenHour.DTO;
 using Microsoft.AspNetCore.Identity;
+using System.Globalization;
 
 namespace GoldenHour.Application.Core
 {
@@ -39,7 +40,8 @@ namespace GoldenHour.Application.Core
             CreateMap<Domain.Brigade, BaseEntity>();
 
             CreateMap<Domain.Incident, DTO.Incidents.Incident>()
-                .ForMember(x => x.MedicFullName, o => o.MapFrom(x => x.Medic.FullName));
+                .ForMember(x => x.MedicFullName, o => o.MapFrom(x => x.Medic.FullName))
+                .ForMember(x => x.DateTime, o => o.MapFrom(x => x.DateTime.ToString("MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture)));
         }
     }
 }

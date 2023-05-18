@@ -19,7 +19,10 @@ namespace GoldenHour.Maui.ViewModels
         async Task ResendAll()
         {
             await Shell.Current.DisplayAlert("Info", "All failed incidents will be resended now", "Ok");
-            Task.Run(() => _incidentManager.SendAllUnsuccessfullIncidents(Incidents.Where(i => !i.IsSuccessfull).ToList()));
+            Task.Run(() => { 
+                _incidentManager.SendAllUnsuccessfullIncidents(Incidents.Where(i => !i.IsSuccessfull).ToList()).Wait();
+                LoadIncidents();
+            });
         }
 
         public void LoadIncidents()
