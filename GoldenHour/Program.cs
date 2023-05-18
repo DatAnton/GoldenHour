@@ -1,5 +1,6 @@
 using GoldenHour.Extensions;
 using GoldenHour.Middleware;
+using GoldenHour.SignalR;
 using Microsoft.OpenApi.Models;
 
 namespace GoldenHour
@@ -40,6 +41,8 @@ namespace GoldenHour
                 });
             });
 
+            builder.Services.AddSignalR();
+
             builder.AddDbServices();
             builder.AddInfrastructureRepositories();
             builder.AddHelpServices();
@@ -65,6 +68,8 @@ namespace GoldenHour
             {
                 endpoints.MapControllers();
             });
+
+            app.MapHub<IncidentsHub>("/incidents");
 
             app.Run();
         }

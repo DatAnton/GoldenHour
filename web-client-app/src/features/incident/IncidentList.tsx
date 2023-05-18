@@ -17,6 +17,7 @@ export default observer(function IncidentList() {
 
     useEffect(() => {
         incidentStore.getIncidents();
+        incidentStore.createHubConnection();
     }, [incidentStore]);
 
     return (

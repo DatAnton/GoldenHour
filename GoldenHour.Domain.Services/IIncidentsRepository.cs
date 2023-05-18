@@ -2,5 +2,6 @@
 {
     public interface IIncidentsRepository : IBaseRepository<Incident>
     {
+        Task<Incident> GetFullIncidentById(Guid guid);
     }
 }

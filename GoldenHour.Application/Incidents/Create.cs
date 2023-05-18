@@ -8,13 +8,13 @@ namespace GoldenHour.Application.Incidents
 {
     public class Create
     {
-        public class Command : IRequest
+        public class Command : IRequest<Incident>
         {
             public IncidentCreate Incident { get; set; }
             public string WebRootPath { get;set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Incident>
         {
             private readonly IIncidentsRepository _incidentsRepository;
             private readonly IHelpPhotosRepository _helpPhotosRepository;
@@ -32,7 +32,7 @@ namespace GoldenHour.Application.Incidents
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Incident> Handle(Command request, CancellationToken cancellationToken)
             {
                 var incident = _mapper.Map<Domain.Incident>(request.Incident);
                 incident.Id = Guid.NewGuid();
@@ -50,9 +50,17 @@ namespace GoldenHour.Application.Incidents
                             Path = file
                         })
                     .ToList());
-                    
+                
+                var resultIncident = await _incidentsRepository.GetFullIncidentById(incident.Id);
+                var dto = _mapper.Map<Incident>(resultIncident);
+                dto.ServiceMan = _mapper.Map<DTO.Users.ServiceMan>(resultIncident.ServiceMan);
+                dto.Images = new List<string>();
+                foreach (var photo in resultIncident.HelpPhotos)
+                {
+                    dto.Images.Add(await _fileHelper.GetPhoto(photo.Path));
+                }
 
-                return Unit.Value;
+                return dto;
             }
         }
     }

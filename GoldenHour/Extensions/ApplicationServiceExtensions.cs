@@ -53,7 +53,7 @@ namespace GoldenHour.Extensions
 
             builder.Services.AddCors(o =>
             {
-                o.AddPolicy("AllowAll", a => a.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+                o.AddPolicy("AllowAll", a => a.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000"));
             });
 
             builder.Services.AddAuthentication(options =>
@@ -72,6 +72,20 @@ namespace GoldenHour.Extensions
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context => {
+                        var accesstoken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accesstoken) && (path.StartsWithSegments("/incidents")))
+                        {
+                            context.Token = accesstoken;
+                        }
+                        return Task.CompletedTask;
+                    }
+
                 };
             });
 
