@@ -12,6 +12,7 @@ namespace GoldenHour.Domain
         public Guid BrigadeId { get; set; }
         public List<Incident> Incidents { get; set; }
         public List<Incident> HelpedIncidents { get; set; }
+        public List<UserRefreshToken> UserRefreshTokens { get; set; }
 
     }
 }

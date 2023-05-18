@@ -19,6 +19,7 @@ namespace GoldenHour.Persistance
         public DbSet<Brigade> Brigades { get; set; }
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<HelpPhoto> HelpPhotos { get; set; }
+        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,7 +35,7 @@ namespace GoldenHour.Persistance
                 .HasOne(i => i.Medic)
                 .WithMany(s => s.HelpedIncidents)
                 .HasForeignKey(i => i.MedicId)
-                .OnDelete(DeleteBehavior.NoAction); ;
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<BloodGroup>()
                 .HasIndex(b => b.Name)
@@ -68,6 +69,10 @@ namespace GoldenHour.Persistance
                         SequenceNumber = 4
                     },
                 });
+
+            builder.Entity<UserRefreshToken>()
+                .HasIndex(b => b.ServiceManId)
+                .IsUnique();
 
             builder.Entity<Brigade>()
                 .HasIndex(b => b.Name)
