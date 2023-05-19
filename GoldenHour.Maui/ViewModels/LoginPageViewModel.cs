@@ -53,6 +53,7 @@ namespace GoldenHour.Maui.ViewModels
                 if (response != null && !string.IsNullOrEmpty(response?.Token))
                 {
                     await SecureStorage.SetAsync(Constants.TOKEN_KEY_SECURE_STORAGE, response.Token);
+                    await SecureStorage.SetAsync(Constants.REFRESH_TOKEN_KEY_SECURE_STORAGE, response.RefreshToken);
 
                     var jsonToken = new JwtSecurityTokenHandler().ReadToken(response.Token) as JwtSecurityToken;
                     _userInfoHelper.FillUserInfo(jsonToken);

@@ -1,4 +1,5 @@
 ﻿using GoldenHour.Maui.DTO;
+using GoldenHour.Maui.Helpers;
 using GoldenHour.Maui.Interfaces;
 using Newtonsoft.Json;
 
@@ -6,52 +7,30 @@ namespace GoldenHour.Maui.Services
 {
     public class UserService : BaseHttpService, IUserService
     {
+        public UserService(UserInfoHelper userInfoHelper, TabsBuilder tabsBuilder) : base(userInfoHelper, tabsBuilder)
+        {
+        }
+
         public async Task<byte[]> GetImageAsync()
         {
-            try
-            {
-                var response = await GetWithHeadersAsync("/api/users/generateQr");
+            var response = await GetWithHeadersAsync("/api/users/generateQr");
+            var fileStream = await response.Content.ReadAsStreamAsync();
+            var memoryStream = new MemoryStream();
+            fileStream.CopyTo(memoryStream);
 
-                response.EnsureSuccessStatusCode();
-                var fileStream = await response.Content.ReadAsStreamAsync();
-                var memoryStream = new MemoryStream();
-                fileStream.CopyTo(memoryStream);
-
-                return memoryStream.ToArray();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return memoryStream.ToArray();
         }
 
         public async Task<ServiceMan> GetInfoAsync()
         {
-            try
-            {
-                var response = await GetWithHeadersAsync("/api/users/getInfo");
-
-                response.EnsureSuccessStatusCode();
-                return JsonConvert.DeserializeObject<ServiceMan>
-                    (await response.Content.ReadAsStringAsync());
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            var response = await GetWithHeadersAsync("/api/users/getInfo");
+            return JsonConvert.DeserializeObject<ServiceMan>
+                (await response.Content.ReadAsStringAsync());
         }
 
         public async Task UpdatePassword(ChangePasswordModel changePasswordModel)
         {
-            try
-            {
-                var response = await PutWithHeadersAsync("/api/users/changePassword", changePasswordModel);
-                response.EnsureSuccessStatusCode();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            await PutWithHeadersAsync("/api/users/changePassword", changePasswordModel);
         }
     }
 }

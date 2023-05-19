@@ -10,7 +10,6 @@ using System.Security.Claims;
 
 namespace GoldenHour.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountsController : ControllerBase
@@ -28,6 +27,7 @@ namespace GoldenHour.Controllers
             _userRefreshTokenRepository = userRefreshTokenRepository;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login(Login login)
         {
@@ -41,6 +41,7 @@ namespace GoldenHour.Controllers
             return isValidPassword ? Ok(await CreateTokensObject(user)) : Unauthorized();
         }
 
+        [AllowAnonymous]
         [HttpPost("refresh")]
         public async Task<ActionResult<LoginResponse>> Refresh(Refresh refresh)
         {
@@ -57,9 +58,8 @@ namespace GoldenHour.Controllers
             throw new Exception("Invalid refresh token");    
         }
 
-        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<DTO.Users.ServiceMan>> GetCurrentUser()
+        public async Task<ActionResult<LoginResponse>> GetCurrentUser()
         {
             var user = await _userManager.Users
                 .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
@@ -74,12 +74,14 @@ namespace GoldenHour.Controllers
         private async Task<LoginResponse> CreateTokensObject(ServiceMan user)
         {
             var refreshToken = await _tokenService.GenerateRefreshToken(user.Id);
+            var role = (await _userManager.GetRolesAsync(user!)).First();
             return new LoginResponse
             {
                 Token = await _tokenService.GenerateToken(user),
                 UserId = user.Id,
                 UserName = user.UserName,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                Role = role
             };
         }
 

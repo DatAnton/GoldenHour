@@ -60,9 +60,11 @@ namespace GoldenHour.Maui.ViewModels
         public void CleanAuthData()
         {
             SecureStorage.Remove(Constants.TOKEN_KEY_SECURE_STORAGE);
+            SecureStorage.Remove(Constants.REFRESH_TOKEN_KEY_SECURE_STORAGE);
             _userInfoHelper.CleanUserInfo();
             _userInfoHelper.RemoveUserFromStore();
             _tabsBuilder.BuildNavTabs();
+            App.DbService.Clean();
         }
 
         [RelayCommand]

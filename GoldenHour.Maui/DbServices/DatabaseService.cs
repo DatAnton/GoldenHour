@@ -21,6 +21,13 @@ namespace GoldenHour.Maui.DbServices
             _connection.CreateTable<Photo>();
         }
 
+        public void Clean()
+        {
+            Init();
+            _connection.DeleteAll<Incident>();
+            _connection.DeleteAll<Photo>();
+        }
+
         public List<Incident> GetIncidents()
         {
             Init();

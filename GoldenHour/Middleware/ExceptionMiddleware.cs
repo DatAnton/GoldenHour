@@ -25,7 +25,7 @@ namespace GoldenHour.Middleware
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                var response = new AppException(context.Response.StatusCode, e.Message);
+                var response = new AppException(e.Message);
 
                 var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 

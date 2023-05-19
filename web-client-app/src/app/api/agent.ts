@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { User, UserFormValues } from "../models/user";
+import { RefreshModel, User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 import { ServiceMan } from "../models/serviceMan";
 import { BaseEntity } from "../models/baseEntity";
@@ -21,13 +21,24 @@ axios.interceptors.response.use(
         return response;
     },
     (error: AxiosError) => {
-        const { data, status } = error.response!;
+        const { data, status, config } = error.response!;
         switch (status) {
             case 401:
-                window.alert("unauthorized");
+                if (store.accountStore.refreshToken) {
+                    const token = store.accountStore.token;
+                    const refresh = store.accountStore.refreshToken;
+                    store.accountStore.clearTokens();
+                    store.accountStore.refresh({
+                        accessToken: token!,
+                        refreshToken: refresh,
+                    });
+                    return axios.create(config);
+                } else {
+                    window.alert("Unauthorized");
+                }
                 break;
             case 403:
-                window.alert("forbidden");
+                window.alert("Forbidden");
                 break;
             case 500:
                 window.alert((data as { message: string }).message);
@@ -51,6 +62,8 @@ const Account = {
     current: () => requests.get<User>("/accounts"),
     login: (user: UserFormValues) =>
         requests.post<User>("/accounts/login", user),
+    refresh: (model: RefreshModel) =>
+        requests.post<User>("/accounts/refresh", model),
 };
 
 const Users = {
