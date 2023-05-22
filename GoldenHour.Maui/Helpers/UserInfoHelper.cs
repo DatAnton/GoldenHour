@@ -24,6 +24,7 @@ namespace GoldenHour.Maui.Helpers
 
         public void CleanUserInfo()
         {
+            if (App.UserInfo == null) return;
             File.Delete(QRCodeHelper.QrCodePath);
             App.UserInfo = null;
         }
