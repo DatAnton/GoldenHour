@@ -21,7 +21,7 @@ namespace GoldenHour.Maui.Managers
                 .AddParameter("Comment", incident.Comment)
                 .AddParameter("Latitude", incident.Latitude.ToString())
                 .AddParameter("Longitude", incident.Longitude.ToString())
-                .AddParameter("DateTime", incident.DateTime.ToString());
+                .AddParameter("DateTime", incident.DateTime.ToString("yyyy-MM-dd'T'HH:mm:ss"));
 
             foreach(var photo in photos)
             {
