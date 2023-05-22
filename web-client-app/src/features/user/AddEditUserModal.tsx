@@ -107,7 +107,7 @@ export default observer(function AddEditUserModal(props: AddUserModalProps) {
         setSelectedFile(null);
         userStore.resetImportUsersResult();
         props.onClose();
-    }
+    };
 
     const onSave = () => {
         if (selectedFile !== null) {
@@ -115,13 +115,10 @@ export default observer(function AddEditUserModal(props: AddUserModalProps) {
             data.append("file", selectedFile);
             userStore.importUsers(data).then(() => userStore.getUsers());
             setSelectedFile(null);
-        } else if (user.id !== "")
-        {
+        } else if (user.id !== "") {
             userStore.updateUser(user).then(() => userStore.getUsers());
             onClose();
-        }
-        else 
-        {
+        } else {
             userStore.createUser(user).then(() => userStore.getUsers());
             onClose();
         }
@@ -200,26 +197,34 @@ export default observer(function AddEditUserModal(props: AddUserModalProps) {
                         />
                     </Form.Group>
                 </Form>
-                <hr />
-                <Form loading={loading}>
-                    {importUsersResult ? (
-                        <Message>
-                            <Message.Header>Import result</Message.Header>
-                            <p>
-                                {importUsersResult} users was imported
-                            </p>
-                        </Message>
-                    ) : null}
-                    <Form.Input
-                        type="file"
-                        onChange={(e) =>
-                            setSelectedFile(
-                                e.target?.files ? e.target.files[0] : null
-                            )
-                        }
-                        label="Import users"
-                    />
-                </Form>
+                {!props.userId ? (
+                    <>
+                        <hr />
+                        <Form loading={loading}>
+                            {importUsersResult ? (
+                                <Message>
+                                    <Message.Header>
+                                        Import result
+                                    </Message.Header>
+                                    <p>
+                                        {importUsersResult} users was imported
+                                    </p>
+                                </Message>
+                            ) : null}
+                            <Form.Input
+                                type="file"
+                                onChange={(e) =>
+                                    setSelectedFile(
+                                        e.target?.files
+                                            ? e.target.files[0]
+                                            : null
+                                    )
+                                }
+                                label="Import users"
+                            />
+                        </Form>
+                    </>
+                ) : null}
             </Modal.Content>
             <Modal.Actions>
                 <Button onClick={() => onClose()}>Cancel</Button>
